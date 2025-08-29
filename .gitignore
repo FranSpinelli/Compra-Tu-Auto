@@ -1,0 +1,85 @@
+# --- Maven ---
+# Directorio de dependencias y builds
+target/
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+
+# Archivos específicos de Maven
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
+
+# --- Java ---
+# Archivos compilados
+*.class
+*.log
+
+# Archivos generados por IDEs
+*.iml
+*.ipr
+*.iws
+
+# --- Spring Boot ---
+# Configuración de Spring
+application*.yml
+application*.yaml
+
+# Archivos de perfil específicos (dev, prod, etc.)
+!application-default.properties
+
+# --- IDEs ---
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.settings/
+.project
+.classpath
+bin/
+
+# NetBeans
+nbproject/
+nbactions.xml
+
+# --- Sistemas Operativos ---
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Otros ---
+# Logs
+logs/
+*.log
+*.log.*
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+
+# Variables de entorno
+.env
+.secrets
+
+# Archivos de prueba (opcional)
+/test-output/
+/coverage/
