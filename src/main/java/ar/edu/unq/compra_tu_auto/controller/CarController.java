@@ -5,6 +5,7 @@ import ar.edu.unq.compra_tu_auto.controller.DTO.CarResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,13 +33,13 @@ public class CarController {
     }
 
     @PostMapping()
-    public ResponseEntity<CarResponseDTO> createCar(@RequestBody CarDTO carDTO) {
+    public ResponseEntity<CarResponseDTO> createCar(@RequestBody @Valid CarDTO carDTO) {
         Car createdCar = carService.createCar(carDTO);
         return ResponseEntity.ok(carMapper.mapFromModelToDto(createdCar));
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer carId, @RequestBody CarDTO carDTO) {
+    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer carId, @RequestBody @Valid CarDTO carDTO) {
         Car updatedCar = carService.updateCar(carId, carDTO);
         return ResponseEntity.ok(carMapper.mapFromModelToDto(updatedCar));
     }
