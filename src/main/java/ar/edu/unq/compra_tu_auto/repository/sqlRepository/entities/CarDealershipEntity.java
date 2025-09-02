@@ -8,17 +8,12 @@ import lombok.Data;
 
 @Entity
 @Data
-public class CarEntity {
+public class CarDealershipEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String brand;
-    private String model;
-    private String color;
-    private Integer manufactureYear;
-    private Integer stock;
-    private Double price;
-    private String description;
+    private String name;
+    private String email;
     private Boolean deleted;
 }
