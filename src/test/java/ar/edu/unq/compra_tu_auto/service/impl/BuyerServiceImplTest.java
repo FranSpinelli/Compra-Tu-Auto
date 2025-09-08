@@ -49,7 +49,7 @@ public class BuyerServiceImplTest {
     public void updateBuyerTest() {
         Integer buyerId = 1;
 
-        BuyerDTO buyerDTO = mock(BuyerDTO.class);
+        BuyerDTO buyerDTO = new BuyerDTO();
         buyerDTO.setFirstName("foo");
         buyerDTO.setLastName("bar");
         buyerDTO.setEmail("baz@gmail.com");
@@ -81,7 +81,7 @@ public class BuyerServiceImplTest {
 
         assertEquals("Buyer with Id: " + buyerId + " not found", exception.getMessage());
         verify(buyerRepository, times(1)).getBuyerWithId(eq(buyerId));
-        verify(buyerRepository, times(1)).saveBuyer(ArgumentMatchers.any(Buyer.class));
+        verify(buyerRepository, never()).saveBuyer(ArgumentMatchers.any(Buyer.class));
     }
 
     @Test
