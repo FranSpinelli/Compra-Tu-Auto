@@ -1,13 +1,12 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarDealershipDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarDealershipResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.carDealership.CarDealershipRequestDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.carDealership.CarDealershipResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.CarDealershipMapper;
 import ar.edu.unq.compra_tu_auto.model.CarDealership;
 import ar.edu.unq.compra_tu_auto.service.CarDealershipService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,14 +34,14 @@ public class CarDealershipController {
     }
 
     @PostMapping
-    public ResponseEntity<CarDealershipResponseDTO> createCarDealership(@RequestBody @Valid CarDealershipDTO carDealershipDTO) {
-        CarDealership createdCarDealership = carDealershipService.createCarDealership(carDealershipDTO);
+    public ResponseEntity<CarDealershipResponseDTO> createCarDealership(@RequestBody @Valid CarDealershipRequestDTO carDealershipRequestDTO) {
+        CarDealership createdCarDealership = carDealershipService.createCarDealership(carDealershipRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(carDealershipMapper.mapFromModelToDto(createdCarDealership));
     }
 
     @PutMapping("/{dealershipId}")
-    public ResponseEntity<CarDealershipResponseDTO> updateCarDealership(@PathVariable Integer dealershipId, @RequestBody @Valid CarDealershipDTO carDealershipDTO) {
-        CarDealership updatedCarDealership = carDealershipService.updateCarDealership(dealershipId, carDealershipDTO);
+    public ResponseEntity<CarDealershipResponseDTO> updateCarDealership(@PathVariable Integer dealershipId, @RequestBody @Valid CarDealershipRequestDTO carDealershipRequestDTO) {
+        CarDealership updatedCarDealership = carDealershipService.updateCarDealership(dealershipId, carDealershipRequestDTO);
         return ResponseEntity.ok(carDealershipMapper.mapFromModelToDto(updatedCarDealership));
     }
 

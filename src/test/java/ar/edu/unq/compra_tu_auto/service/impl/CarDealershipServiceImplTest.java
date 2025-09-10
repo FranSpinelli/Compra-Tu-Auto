@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarDealershipDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.carDealership.CarDealershipRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.CarDealershipMapper;
 import ar.edu.unq.compra_tu_auto.model.CarDealership;
@@ -32,15 +32,15 @@ public class CarDealershipServiceImplTest {
 
     @Test
     public void createCarTest() {
-        CarDealershipDTO carDealershipDTO = mock(CarDealershipDTO.class);
+        CarDealershipRequestDTO carDealershipRequestDTO = mock(CarDealershipRequestDTO.class);
         CarDealership carDealership = mock(CarDealership.class);
-        when(carDealershipMapper.mapFromDtoToModel(eq(carDealershipDTO))).thenReturn(carDealership);
+        when(carDealershipMapper.mapFromDtoToModel(eq(carDealershipRequestDTO))).thenReturn(carDealership);
         when(carDealershipRepository.saveCarDealership(eq(carDealership))).thenReturn(carDealership);
 
-        CarDealership result = carDealershipServiceImpl.createCarDealership(carDealershipDTO);
+        CarDealership result = carDealershipServiceImpl.createCarDealership(carDealershipRequestDTO);
 
         assertEquals(carDealership, result);
-        verify(carDealershipMapper, times(1)).mapFromDtoToModel(eq(carDealershipDTO));
+        verify(carDealershipMapper, times(1)).mapFromDtoToModel(eq(carDealershipRequestDTO));
         verify(carDealershipRepository, times(1)).saveCarDealership(eq(carDealership));
     }
 
@@ -48,9 +48,9 @@ public class CarDealershipServiceImplTest {
     public void updateCarTest() {
         Integer carDealershipId = 1;
 
-        CarDealershipDTO carDealershipDTO = new CarDealershipDTO();
-        carDealershipDTO.setName("Una Consecionaria");
-        carDealershipDTO.setEmail("unMail@gmail.com");
+        CarDealershipRequestDTO carDealershipRequestDTO = new CarDealershipRequestDTO();
+        carDealershipRequestDTO.setName("Una Consecionaria");
+        carDealershipRequestDTO.setEmail("unMail@gmail.com");
 
         CarDealership foundCar = mock(CarDealership.class);
         CarDealership updatedCar = mock(CarDealership.class);
@@ -58,7 +58,7 @@ public class CarDealershipServiceImplTest {
         when(carDealershipRepository.getCarDealershipWithId(eq(carDealershipId))).thenReturn(Optional.of(foundCar));
         when(carDealershipRepository.saveCarDealership(ArgumentMatchers.any(CarDealership.class))).thenReturn(updatedCar);
 
-        CarDealership result = carDealershipServiceImpl.updateCarDealership(carDealershipId, carDealershipDTO);
+        CarDealership result = carDealershipServiceImpl.updateCarDealership(carDealershipId, carDealershipRequestDTO);
 
         assertEquals(updatedCar, result);
         verify(carDealershipRepository, times(1)).getCarDealershipWithId(eq(carDealershipId));
@@ -70,11 +70,11 @@ public class CarDealershipServiceImplTest {
     @Test
     public void updateCarWithNonExistentCarTest() {
         Integer carDealershipId = 1;
-        CarDealershipDTO carDealershipDTO = new CarDealershipDTO();
+        CarDealershipRequestDTO carDealershipRequestDTO = new CarDealershipRequestDTO();
         when(carDealershipRepository.getCarDealershipWithId(eq(carDealershipId))).thenReturn(Optional.empty());
 
         ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> {
-            carDealershipServiceImpl.updateCarDealership(carDealershipId, carDealershipDTO);
+            carDealershipServiceImpl.updateCarDealership(carDealershipId, carDealershipRequestDTO);
         });
 
         assertEquals("Car Dealership with Id: 1 not found", exception.getMessage());

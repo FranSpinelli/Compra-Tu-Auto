@@ -11,8 +11,4 @@ public class CarDealership {
     private String name;
     private String email;
     private List<Car> cars;
-
-    public void addCar(Car car){
-        this.cars.add(car);
-    }
 }

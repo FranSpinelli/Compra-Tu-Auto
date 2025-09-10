@@ -1,7 +1,7 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.car.CarRequestDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.car.CarResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.service.CarService;
@@ -34,14 +34,14 @@ public class CarController {
     }
 
     @PostMapping()
-    public ResponseEntity<CarResponseDTO> createCar(@PathVariable Integer dealershipId, @RequestBody @Valid CarDTO carDTO) {
-        Car createdCar = carService.createCar(dealershipId, carDTO);
+    public ResponseEntity<CarResponseDTO> createCar(@PathVariable Integer dealershipId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
+        Car createdCar = carService.createCar(dealershipId, carRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.mapFromModelToDto(createdCar));
     }
 
     @PutMapping("/{carId}")
-    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer dealershipId, @PathVariable Integer carId, @RequestBody @Valid CarDTO carDTO) {
-        Car updatedCar = carService.updateCar(dealershipId, carId, carDTO);
+    public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer dealershipId, @PathVariable Integer carId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
+        Car updatedCar = carService.updateCar(dealershipId, carId, carRequestDTO);
         return ResponseEntity.ok(carMapper.mapFromModelToDto(updatedCar));
     }
 

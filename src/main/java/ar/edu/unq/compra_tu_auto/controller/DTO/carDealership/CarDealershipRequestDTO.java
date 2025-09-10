@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.carDealership;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CarDealershipDTO {
+public class CarDealershipRequestDTO {
 
     @NotBlank(message = "Name field is required")
     @Size(min = 2, max = 100, message = "Name field length must be between 2 and 100 characters.")

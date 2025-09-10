@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.CarDealershipDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.carDealership.CarDealershipRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.CarDealershipMapper;
 import ar.edu.unq.compra_tu_auto.model.CarDealership;
@@ -23,8 +23,8 @@ public class CarDealershipServiceImpl implements CarDealershipService {
     }
 
     @Override
-    public CarDealership createCarDealership(CarDealershipDTO carDealershipDTO) {
-        CarDealership carDealershipToBeSaved = carDealershipMapper.mapFromDtoToModel(carDealershipDTO);
+    public CarDealership createCarDealership(CarDealershipRequestDTO carDealershipRequestDTO) {
+        CarDealership carDealershipToBeSaved = carDealershipMapper.mapFromDtoToModel(carDealershipRequestDTO);
         carDealershipToBeSaved.setCars(new ArrayList<>());
         return carDealershipRepository.saveCarDealership(carDealershipToBeSaved);
     }
@@ -35,12 +35,12 @@ public class CarDealershipServiceImpl implements CarDealershipService {
     }
 
     @Override
-    public CarDealership updateCarDealership(Integer dealershipId, CarDealershipDTO carDealershipDTO) {
+    public CarDealership updateCarDealership(Integer dealershipId, CarDealershipRequestDTO carDealershipRequestDTO) {
         CarDealership foundDealershipToEdit = carDealershipRepository.getCarDealershipWithId(dealershipId)
                 .orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
 
-        foundDealershipToEdit.setName(carDealershipDTO.getName());
-        foundDealershipToEdit.setEmail(carDealershipDTO.getEmail());
+        foundDealershipToEdit.setName(carDealershipRequestDTO.getName());
+        foundDealershipToEdit.setEmail(carDealershipRequestDTO.getEmail());
 
         return carDealershipRepository.saveCarDealership(foundDealershipToEdit);
     }

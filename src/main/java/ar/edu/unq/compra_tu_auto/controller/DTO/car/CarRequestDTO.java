@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.car;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CarDTO {
+public class CarRequestDTO {
 
     @NotBlank(message = "Brand field is required")
     @Size(min = 2, max = 100, message = "Brand field length must be between 2 and 100 characters.")

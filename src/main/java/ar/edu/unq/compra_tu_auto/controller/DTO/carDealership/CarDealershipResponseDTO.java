@@ -1,5 +1,6 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.carDealership;
 
+import ar.edu.unq.compra_tu_auto.controller.DTO.car.CarResponseDTO;
 import lombok.Data;
 
 import java.util.List;
