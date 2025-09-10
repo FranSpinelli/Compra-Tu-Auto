@@ -1,6 +1,4 @@
-package ar.edu.unq.compra_tu_auto.exception;
-
-import ar.edu.unq.compra_tu_auto.controller.DTO.ErrorResponseDTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.error;
 
 import java.util.Map;
 

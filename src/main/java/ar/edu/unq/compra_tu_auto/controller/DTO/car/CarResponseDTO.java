@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.car;
 
 import lombok.Data;
 
@@ -13,4 +13,5 @@ public class CarResponseDTO {
     private Integer stock;
     private Double price;
     private String description;
+    private Integer dealershipId;
 }

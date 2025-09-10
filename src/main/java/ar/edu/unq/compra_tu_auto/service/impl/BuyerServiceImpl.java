@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BuyerDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;

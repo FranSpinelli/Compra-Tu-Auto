@@ -13,4 +13,6 @@ public class Car {
     private Integer stock;
     private Double price;
     private String description;
+    private Integer dealershipId;
+    private Boolean deleted;
 }
