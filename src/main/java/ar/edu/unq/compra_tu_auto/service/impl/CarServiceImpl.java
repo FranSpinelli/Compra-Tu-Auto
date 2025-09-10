@@ -5,6 +5,7 @@ import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.repository.CarRepository;
+import ar.edu.unq.compra_tu_auto.service.CarDealershipService;
 import ar.edu.unq.compra_tu_auto.service.CarService;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +16,29 @@ public class CarServiceImpl implements CarService {
 
     private final CarMapper carMapper;
     private final CarRepository carRepository;
+    private final CarDealershipService carDealershipService;
 
-    public CarServiceImpl(CarMapper carMapper, CarRepository carRepository) {
+    public CarServiceImpl(CarMapper carMapper, CarRepository carRepository, CarDealershipService carDealershipService) {
         this.carMapper = carMapper;
         this.carRepository = carRepository;
+        this.carDealershipService = carDealershipService;
     }
 
     @Override
-    public Car createCar(CarDTO carDTO) {
-        return carRepository.saveCar(carMapper.mapFromDtoToModel(carDTO));
+    public Car createCar(Integer dealershipId, CarDTO carDTO) {
+        carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
+
+        Car car = carMapper.mapFromDtoToModel(carDTO);
+        car.setDealershipId(dealershipId);
+
+        return carRepository.saveCar(car);
     }
 
     @Override
-    public Car updateCar(Integer carId, CarDTO carDTO) {
-        Car foundCarToEdit = carRepository.getCarWithId(carId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
+    public Car updateCar(Integer dealershipId, Integer carId, CarDTO carDTO) {
+        carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
 
+        Car foundCarToEdit = carRepository.getCarByIdAndDealershipId(carId, dealershipId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
         foundCarToEdit.setBrand(carDTO.getBrand());
         foundCarToEdit.setModel(carDTO.getModel());
         foundCarToEdit.setColor(carDTO.getColor());
@@ -42,13 +51,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Optional<Car> getCarWithId(Integer carId) {
-        return carRepository.getCarWithId(carId);
+    public Optional<Car> getCarWithId(Integer dealershipId, Integer carId) {
+        carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
+
+        return carRepository.getCarByIdAndDealershipId(carId, dealershipId);
     }
 
     @Override
-    public void deleteCar(Integer carId) {
-        carRepository.deleteCar(carId);
+    public void deleteCar(Integer dealershipId, Integer carId) {
+        carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
+
+        carRepository.deleteCar(carId, dealershipId);
     }
 
 }

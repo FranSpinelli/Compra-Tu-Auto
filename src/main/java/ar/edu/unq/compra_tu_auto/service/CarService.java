@@ -8,11 +8,11 @@ import java.util.Optional;
 
 public interface CarService {
 
-    Car createCar(CarDTO carDTO);
+    Car createCar(Integer dealershipId, CarDTO carDTO);
 
-    Car updateCar(Integer carId, CarDTO carDTO);
+    Car updateCar(Integer dealershipId, Integer carId, CarDTO carDTO);
 
-    Optional<Car> getCarWithId(Integer carId);
+    Optional<Car> getCarWithId(Integer dealershipId, Integer carId);
 
-    void deleteCar(Integer carId);
+    void deleteCar(Integer dealershipId, Integer carId);
 }

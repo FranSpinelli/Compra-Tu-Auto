@@ -1,5 +1,6 @@
 package ar.edu.unq.compra_tu_auto.repository.impl;
 
+import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.repository.CarRepository;
@@ -29,16 +30,15 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public Optional<Car> getCarWithId(Integer carId) {
-        return carSqlRepository.findById(carId).filter(carEntity -> !carEntity.getDeleted()).map(carMapper::mapFromEntityToModel);
+    public Optional<Car> getCarByIdAndDealershipId(Integer carId, Integer dealershipId) {
+        return carSqlRepository.findByIdAndCarDealershipId(carId, dealershipId).filter(carEntity -> !carEntity.getDeleted()).map(carMapper::mapFromEntityToModel);
     }
 
     @Override
-    public void deleteCar(Integer carId) {
-        Optional<CarEntity> carWithId = carSqlRepository.findById(carId);
+    public void deleteCar(Integer carId, Integer dealershipId) {
+        CarEntity carToBeDeleted = carSqlRepository.findByIdAndCarDealershipId(carId, dealershipId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
 
-        if(carWithId.isPresent() && !carWithId.get().getDeleted()) {
-            CarEntity carToBeDeleted = carWithId.get();
+        if(!carToBeDeleted.getDeleted()) {
             carToBeDeleted.setDeleted(true);
             carSqlRepository.save(carToBeDeleted);
         }

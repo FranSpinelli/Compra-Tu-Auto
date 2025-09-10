@@ -38,7 +38,7 @@ public class CarServiceImplTest {
         when(carMapper.mapFromDtoToModel(eq(carDTO))).thenReturn(mockCar);
         when(carRepository.saveCar(eq(mockCar))).thenReturn(mockCar);
 
-        Car result = carServiceImpl.createCar(carDTO);
+        Car result = carServiceImpl.createCar(1, carDTO);
 
         assertEquals(mockCar, result);
         verify(carMapper, times(1)).mapFromDtoToModel(eq(carDTO));
@@ -61,13 +61,13 @@ public class CarServiceImplTest {
         Car foundCar = mock(Car.class);
         Car updatedCar = mock(Car.class);
 
-        when(carRepository.getCarWithId(eq(carId))).thenReturn(Optional.of(foundCar));
+        when(carRepository.getCarByIdAndDealershipId(eq(carId), dealershipId)).thenReturn(Optional.of(foundCar));
         when(carRepository.saveCar(ArgumentMatchers.any(Car.class))).thenReturn(updatedCar);
 
-        Car result = carServiceImpl.updateCar(carId, carDTO);
+        Car result = carServiceImpl.updateCar(carId, carId, carDTO);
 
         assertEquals(updatedCar, result);
-        verify(carRepository, times(1)).getCarWithId(eq(carId));
+        verify(carRepository, times(1)).getCarByIdAndDealershipId(eq(carId), dealershipId);
         verify(foundCar, times(1)).setBrand("Toyota");
         verify(foundCar, times(1)).setModel("Corolla");
         verify(foundCar, times(1)).setColor("Red");
@@ -82,14 +82,14 @@ public class CarServiceImplTest {
     public void updateCarWithNonExistentCarTest() {
         Integer carId = 1;
         CarDTO carDTO = new CarDTO();
-        when(carRepository.getCarWithId(eq(carId))).thenReturn(Optional.empty());
+        when(carRepository.getCarByIdAndDealershipId(eq(carId), dealershipId)).thenReturn(Optional.empty());
 
         ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> {
-            carServiceImpl.updateCar(carId, carDTO);
+            carServiceImpl.updateCar(carId, carId, carDTO);
         });
 
         assertEquals("Car with Id: 1 not found", exception.getMessage());
-        verify(carRepository, times(1)).getCarWithId(eq(carId));
+        verify(carRepository, times(1)).getCarByIdAndDealershipId(eq(carId), dealershipId);
         verify(carRepository, never()).saveCar(ArgumentMatchers.any(Car.class));
     }
 
@@ -97,20 +97,20 @@ public class CarServiceImplTest {
     public void getCarWithIdTest() {
         Integer carId = 1;
         Car mockCar = mock(Car.class);
-        when(carRepository.getCarWithId(eq(carId))).thenReturn(Optional.of(mockCar));
+        when(carRepository.getCarByIdAndDealershipId(eq(carId), dealershipId)).thenReturn(Optional.of(mockCar));
 
-        Optional<Car> result = carServiceImpl.getCarWithId(carId);
+        Optional<Car> result = carServiceImpl.getCarWithId(carId, carId);
 
         assertEquals(mockCar, result.get());
-        verify(carRepository, times(1)).getCarWithId(eq(carId));
+        verify(carRepository, times(1)).getCarByIdAndDealershipId(eq(carId), dealershipId);
     }
 
     @Test
     public void deleteCarTest() {
         Integer carId = 1;
 
-        carServiceImpl.deleteCar(carId);
+        carServiceImpl.deleteCar(carId, carId);
 
-        verify(carRepository, times(1)).deleteCar(eq(carId));
+        verify(carRepository, times(1)).deleteCar(eq(carId), carId);
     }
 }

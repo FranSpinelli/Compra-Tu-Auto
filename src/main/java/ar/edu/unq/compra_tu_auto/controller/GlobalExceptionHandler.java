@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ElementNotFoundException.class)
     public ResponseEntity<GenericErrorResponseDTO> handleElementNotFoundException(ElementNotFoundException elementNotFoundException) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDTO(elementNotFoundException.getMessage()));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new GenericErrorResponseDTO(elementNotFoundException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
