@@ -6,6 +6,8 @@ import ar.edu.unq.compra_tu_auto.mapper.CarDealershipMapper;
 import ar.edu.unq.compra_tu_auto.model.CarDealership;
 import ar.edu.unq.compra_tu_auto.service.CarDealershipService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,7 +37,7 @@ public class CarDealershipController {
     @PostMapping
     public ResponseEntity<CarDealershipResponseDTO> createCarDealership(@RequestBody @Valid CarDealershipDTO carDealershipDTO) {
         CarDealership createdCarDealership = carDealershipService.createCarDealership(carDealershipDTO);
-        return ResponseEntity.ok(carDealershipMapper.mapFromModelToDto(createdCarDealership));
+        return ResponseEntity.status(HttpStatus.CREATED).body(carDealershipMapper.mapFromModelToDto(createdCarDealership));
     }
 
     @PutMapping("/{dealershipId}")

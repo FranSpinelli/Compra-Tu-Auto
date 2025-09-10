@@ -1,5 +1,6 @@
 package ar.edu.unq.compra_tu_auto.repository.impl;
 
+import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.CarDealershipMapper;
 import ar.edu.unq.compra_tu_auto.model.CarDealership;
 import ar.edu.unq.compra_tu_auto.repository.CarDealershipRepository;
@@ -37,14 +38,12 @@ public class CarDealershipRepositoryImpl implements CarDealershipRepository {
 
     @Override
     public void deleteCarDealership(Integer dealershipId) {
-        Optional<CarDealershipEntity> carDealershipWithId = carDealershipSqlRepository.findById(dealershipId);
+        CarDealershipEntity carDealershipToBeDeleted = carDealershipSqlRepository.findById(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
 
-        if(carDealershipWithId.isPresent() && !carDealershipWithId.get().getDeleted()) {
-            CarDealershipEntity carDealershipToBeDeleted = carDealershipWithId.get();
+        if(!carDealershipToBeDeleted.getDeleted()) {
             carDealershipToBeDeleted.setDeleted(true);
             carDealershipSqlRepository.save(carDealershipToBeDeleted);
         }
     }
-
 
 }

@@ -8,6 +8,7 @@ import ar.edu.unq.compra_tu_auto.repository.CarDealershipRepository;
 import ar.edu.unq.compra_tu_auto.service.CarDealershipService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,9 @@ public class CarDealershipServiceImpl implements CarDealershipService {
 
     @Override
     public CarDealership createCarDealership(CarDealershipDTO carDealershipDTO) {
-        return carDealershipRepository.saveCarDealership(carDealershipMapper.mapFromDtoToModel(carDealershipDTO));
+        CarDealership carDealershipToBeSaved = carDealershipMapper.mapFromDtoToModel(carDealershipDTO);
+        carDealershipToBeSaved.setCars(new ArrayList<>());
+        return carDealershipRepository.saveCarDealership(carDealershipToBeSaved);
     }
 
     @Override
