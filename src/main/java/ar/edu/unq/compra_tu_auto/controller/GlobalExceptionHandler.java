@@ -1,8 +1,8 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.GenericErrorResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.error.GenericErrorResponseDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
-import ar.edu.unq.compra_tu_auto.exception.ValidationErrorResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.error.ValidationErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

@@ -1,7 +1,8 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BuyerDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.BuyerResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.error.GenericErrorResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.service.BuyerService;

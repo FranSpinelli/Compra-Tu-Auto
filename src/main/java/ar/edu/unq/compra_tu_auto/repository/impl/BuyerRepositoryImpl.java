@@ -1,5 +1,6 @@
 package ar.edu.unq.compra_tu_auto.repository.impl;
 
+import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.repository.BuyerRepository;
@@ -36,10 +37,9 @@ public class BuyerRepositoryImpl implements BuyerRepository {
 
     @Override
     public void deleteBuyerById(Integer id) {
-        Optional<BuyerEntity> buyerWithId = buyerSqlRepository.findById(id);
+        BuyerEntity buyerToBeDeleted = buyerSqlRepository.findById(id).orElseThrow(() -> new ElementNotFoundException("Buyer", id.toString()));
 
-        if (buyerWithId.isPresent() && !buyerWithId.get().getDeleted()) {
-            BuyerEntity buyerToBeDeleted = buyerWithId.get();
+        if (!buyerToBeDeleted.getDeleted()) {
             buyerToBeDeleted.setDeleted(true);
             buyerSqlRepository.save(buyerToBeDeleted);
         }

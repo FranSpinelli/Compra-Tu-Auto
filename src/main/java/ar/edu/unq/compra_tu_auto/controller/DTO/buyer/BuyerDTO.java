@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.buyer;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
