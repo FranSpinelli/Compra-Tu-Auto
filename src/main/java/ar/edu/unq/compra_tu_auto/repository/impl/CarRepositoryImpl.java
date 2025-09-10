@@ -38,7 +38,7 @@ public class CarRepositoryImpl implements CarRepository {
     public void deleteCar(Integer carId, Integer dealershipId) {
         CarEntity carToBeDeleted = carSqlRepository.findByIdAndCarDealershipId(carId, dealershipId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
 
-        if(!carToBeDeleted.getDeleted()) {
+        if (!carToBeDeleted.getDeleted()) {
             carToBeDeleted.setDeleted(true);
             carSqlRepository.save(carToBeDeleted);
         }

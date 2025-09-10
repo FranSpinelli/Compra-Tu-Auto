@@ -38,9 +38,10 @@ public class CarDealershipRepositoryImpl implements CarDealershipRepository {
 
     @Override
     public void deleteCarDealership(Integer dealershipId) {
-        CarDealershipEntity carDealershipToBeDeleted = carDealershipSqlRepository.findById(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
+        CarDealershipEntity carDealershipToBeDeleted = carDealershipSqlRepository.findById(dealershipId)
+                .orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
 
-        if(!carDealershipToBeDeleted.getDeleted()) {
+        if (!carDealershipToBeDeleted.getDeleted()) {
             carDealershipToBeDeleted.setDeleted(true);
             carDealershipSqlRepository.save(carDealershipToBeDeleted);
         }
