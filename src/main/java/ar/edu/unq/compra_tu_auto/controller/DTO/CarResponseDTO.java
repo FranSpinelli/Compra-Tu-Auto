@@ -13,4 +13,5 @@ public class CarResponseDTO {
     private Integer stock;
     private Double price;
     private String description;
+    private Integer dealershipId;
 }
