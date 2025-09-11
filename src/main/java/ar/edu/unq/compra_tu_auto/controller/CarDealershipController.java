@@ -36,20 +36,20 @@ public class CarDealershipController {
         Optional<CarDealership> foundCarDealership = carDealershipService.getCarDealershipWithId(dealershipId);
 
         return foundCarDealership.map(carDealership ->
-                ResponseEntity.ok(carDealershipMapper.mapFromModelToDto(carDealership))
+                ResponseEntity.ok(carDealershipMapper.mapFromModelToResponseDto(carDealership))
         ).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<CarDealershipResponseDTO> createCarDealership(@RequestBody @Valid CarDealershipRequestDTO carDealershipRequestDTO) {
         CarDealership createdCarDealership = carDealershipService.createCarDealership(carDealershipRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carDealershipMapper.mapFromModelToDto(createdCarDealership));
+        return ResponseEntity.status(HttpStatus.CREATED).body(carDealershipMapper.mapFromModelToResponseDto(createdCarDealership));
     }
 
     @PutMapping("/{dealershipId}")
     public ResponseEntity<CarDealershipResponseDTO> updateCarDealership(@PathVariable Integer dealershipId, @RequestBody @Valid CarDealershipRequestDTO carDealershipRequestDTO) {
         CarDealership updatedCarDealership = carDealershipService.updateCarDealership(dealershipId, carDealershipRequestDTO);
-        return ResponseEntity.ok(carDealershipMapper.mapFromModelToDto(updatedCarDealership));
+        return ResponseEntity.ok(carDealershipMapper.mapFromModelToResponseDto(updatedCarDealership));
     }
 
     @DeleteMapping("/{dealershipId}")

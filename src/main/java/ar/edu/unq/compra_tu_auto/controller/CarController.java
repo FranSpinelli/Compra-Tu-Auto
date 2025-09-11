@@ -36,20 +36,20 @@ public class CarController {
         Optional<Car> foundCar = carService.getCarWithId(dealershipId, carId);
 
         return foundCar.map(car ->
-                ResponseEntity.ok(carMapper.mapFromModelToDto(car))
+                ResponseEntity.ok(carMapper.mapFromModelToResponseDto(car))
         ).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping()
     public ResponseEntity<CarResponseDTO> createCar(@PathVariable Integer dealershipId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
         Car createdCar = carService.createCar(dealershipId, carRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.mapFromModelToDto(createdCar));
+        return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.mapFromModelToResponseDto(createdCar));
     }
 
     @PutMapping("/{carId}")
     public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer dealershipId, @PathVariable Integer carId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
         Car updatedCar = carService.updateCar(dealershipId, carId, carRequestDTO);
-        return ResponseEntity.ok(carMapper.mapFromModelToDto(updatedCar));
+        return ResponseEntity.ok(carMapper.mapFromModelToResponseDto(updatedCar));
     }
 
     @DeleteMapping("/{carId}")

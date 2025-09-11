@@ -24,7 +24,7 @@ public class CarDealershipServiceImpl implements CarDealershipService {
 
     @Override
     public CarDealership createCarDealership(CarDealershipRequestDTO carDealershipRequestDTO) {
-        CarDealership carDealershipToBeSaved = carDealershipMapper.mapFromDtoToModel(carDealershipRequestDTO);
+        CarDealership carDealershipToBeSaved = carDealershipMapper.mapFromRequestDtoToModel(carDealershipRequestDTO);
         carDealershipToBeSaved.setCars(new ArrayList<>());
         return carDealershipRepository.saveCarDealership(carDealershipToBeSaved);
     }

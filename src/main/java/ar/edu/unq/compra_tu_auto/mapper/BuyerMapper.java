@@ -9,8 +9,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface BuyerMapper {
 
-    BuyerResponseDTO mapFromModelToDTO(Buyer buyer);
-    Buyer mapFromDTOToModel(BuyerRequestDTO buyerDTO);
+    Buyer mapFromRequestDTOToModel(BuyerRequestDTO buyerDTO);
+
     BuyerEntity mapFromModelToEntity(Buyer buyer);
+
     Buyer mapFromEntityToModel(BuyerEntity buyerEntity);
+
+    BuyerResponseDTO mapFromModelToResponseDTO(Buyer buyer);
 }

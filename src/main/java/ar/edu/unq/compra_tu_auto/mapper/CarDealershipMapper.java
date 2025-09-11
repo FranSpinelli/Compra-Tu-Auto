@@ -9,8 +9,11 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", uses = CarMapper.class)
 public interface CarDealershipMapper {
 
-    CarDealership mapFromDtoToModel(CarDealershipRequestDTO carDealershipRequestDTO);
+    CarDealership mapFromRequestDtoToModel(CarDealershipRequestDTO carDealershipRequestDTO);
+
     CarDealershipEntity mapFromModelToEntity(CarDealership carDealership);
+
     CarDealership mapFromEntityToModel(CarDealershipEntity savedCarDealership);
-    CarDealershipResponseDTO mapFromModelToDto(CarDealership createdCarDealership);
+
+    CarDealershipResponseDTO mapFromModelToResponseDto(CarDealership createdCarDealership);
 }

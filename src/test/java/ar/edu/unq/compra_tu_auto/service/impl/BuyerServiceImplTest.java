@@ -35,14 +35,14 @@ public class BuyerServiceImplTest {
     public void createBuyerTest() {
         BuyerRequestDTO buyerDTO = mock(BuyerRequestDTO.class);
         Buyer mockBuyer = mock(Buyer.class);
-        when(buyerMapper.mapFromDTOToModel(eq(buyerDTO))).thenReturn(mockBuyer);
+        when(buyerMapper.mapFromRequestDTOToModel(eq(buyerDTO))).thenReturn(mockBuyer);
         when(buyerRepository.saveBuyer(eq(mockBuyer))).thenReturn(mockBuyer);
 
         Buyer result = buyerServiceImpl.createBuyer(buyerDTO);
 
         assertEquals(mockBuyer, result);
         verify(buyerRepository, times(1)).saveBuyer(eq(mockBuyer));
-        verify(buyerMapper, times(1)).mapFromDTOToModel(eq(buyerDTO));
+        verify(buyerMapper, times(1)).mapFromRequestDTOToModel(eq(buyerDTO));
     }
 
     @Test
