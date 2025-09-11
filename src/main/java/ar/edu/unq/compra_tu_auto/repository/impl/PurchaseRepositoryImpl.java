@@ -7,6 +7,8 @@ import ar.edu.unq.compra_tu_auto.repository.sqlRepository.PurchaseSqlRepository;
 import ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities.PurchaseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class PurchaseRepositoryImpl implements PurchaseRepository {
 
@@ -24,5 +26,12 @@ public class PurchaseRepositoryImpl implements PurchaseRepository {
         purchaseToBeSaved.setDeleted(false);
         PurchaseEntity savedPurchase = purchaseSqlRepository.save(purchaseToBeSaved);
         return purchaseMapper.mapFromEntityToModel(savedPurchase);
+    }
+
+    @Override
+    public Optional<Purchase> getPurchaseWithId(Integer purchaseId) {
+        return purchaseSqlRepository.findById(purchaseId)
+                .filter(purchaseEntity -> !purchaseEntity.getDeleted())
+                .map(purchaseMapper::mapFromEntityToModel);
     }
 }

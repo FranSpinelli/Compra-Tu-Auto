@@ -13,6 +13,8 @@ import ar.edu.unq.compra_tu_auto.service.CarService;
 import ar.edu.unq.compra_tu_auto.service.PurchaseService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
 
@@ -45,5 +47,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 
         Purchase purchaseToBeCreated = new Purchase(null, buyer, carToBePurchased, false);
         return purchaseRepository.savePurchase(purchaseToBeCreated);
+    }
+
+    @Override
+    public Optional<Purchase> getPurchaseWithId(Integer purchaseId) {
+        return purchaseRepository.getPurchaseWithId(purchaseId);
     }
 }
