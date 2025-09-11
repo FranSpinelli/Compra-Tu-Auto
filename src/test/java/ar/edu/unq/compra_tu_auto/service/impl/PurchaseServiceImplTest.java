@@ -2,7 +2,6 @@ package ar.edu.unq.compra_tu_auto.service.impl;
 
 import ar.edu.unq.compra_tu_auto.controller.DTO.car.CarRequestDTO;
 import ar.edu.unq.compra_tu_auto.controller.DTO.purchase.PurchaseRequestDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.purchase.PurchaseResponseDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.exception.InsufficientStockException;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
@@ -52,9 +51,8 @@ public class PurchaseServiceImplTest {
         purchaseRequestDTO.setCarDealershipId(1);
         purchaseRequestDTO.setCarId(1);
 
-        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> {
-            purchaseServiceImpl.createPurchase(purchaseRequestDTO);
-        });
+        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class,
+                () -> purchaseServiceImpl.createPurchase(purchaseRequestDTO));
 
         assertEquals("Buyer with Id: 1 not found", exception.getMessage());
     }
@@ -69,9 +67,8 @@ public class PurchaseServiceImplTest {
         purchaseRequestDTO.setCarDealershipId(1);
         purchaseRequestDTO.setCarId(1);
 
-        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> {
-            purchaseServiceImpl.createPurchase(purchaseRequestDTO);
-        });
+        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class,
+                () -> purchaseServiceImpl.createPurchase(purchaseRequestDTO));
 
         assertEquals("Car with Id: 1 not found", exception.getMessage());
     }
@@ -80,7 +77,7 @@ public class PurchaseServiceImplTest {
     public void creatPurchaseOfCarWithNotEnoughStock() {
         Car car = mock(Car.class);
         when(car.getStock()).thenReturn(0);
-        when(car.getId()).thenReturn(1);
+        when(car.getCarId()).thenReturn(1);
 
         when(buyerService.getBuyerWithId(eq(1))).thenReturn(Optional.of(mock(Buyer.class)));
         when(carService.getCarWithId(eq(1), eq(1))).thenReturn(Optional.of(car));
@@ -90,9 +87,8 @@ public class PurchaseServiceImplTest {
         purchaseRequestDTO.setCarDealershipId(1);
         purchaseRequestDTO.setCarId(1);
 
-        InsufficientStockException exception = assertThrows(InsufficientStockException.class, () -> {
-            purchaseServiceImpl.createPurchase(purchaseRequestDTO);
-        });
+        InsufficientStockException exception = assertThrows(InsufficientStockException.class,
+                () -> purchaseServiceImpl.createPurchase(purchaseRequestDTO));
 
         assertEquals("Car with Id: 1 is out of stock.", exception.getMessage());
     }
