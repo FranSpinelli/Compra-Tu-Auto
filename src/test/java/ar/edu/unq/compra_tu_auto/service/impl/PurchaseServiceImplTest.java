@@ -77,7 +77,7 @@ public class PurchaseServiceImplTest {
     public void creatPurchaseOfCarWithNotEnoughStock() {
         Car car = mock(Car.class);
         when(car.getStock()).thenReturn(0);
-        when(car.getCarId()).thenReturn(1);
+        when(car.getId()).thenReturn(1);
 
         when(buyerService.getBuyerWithId(eq(1))).thenReturn(Optional.of(mock(Buyer.class)));
         when(carService.getCarWithId(eq(1), eq(1))).thenReturn(Optional.of(car));

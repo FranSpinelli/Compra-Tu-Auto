@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Bookmark {
 
-    private Integer bookmarkId;
+    private Integer id;
     private Integer score;
     private String review;
     private Car car;

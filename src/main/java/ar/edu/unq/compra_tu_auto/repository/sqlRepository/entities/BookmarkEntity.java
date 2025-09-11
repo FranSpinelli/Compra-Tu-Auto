@@ -9,7 +9,7 @@ public class BookmarkEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer bookmarkId;
+    private Integer id;
 
     private Integer score;
     private String review;
