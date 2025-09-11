@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CarMapper {
 
-    Car mapFromDtoToModel(CarRequestDTO carRequestDto);
+    Car mapFromRequestDtoToModel(CarRequestDTO carRequestDto);
 
     @Mapping(source = "dealershipId", target = "carDealership.id")
     CarEntity mapFromModelToEntity(Car car);
@@ -18,5 +18,5 @@ public interface CarMapper {
     @Mapping(source = "carDealership.id", target = "dealershipId")
     Car mapFromEntityToModel(CarEntity carEntity);
 
-    CarResponseDTO mapFromModelToDto(Car car);
+    CarResponseDTO mapFromModelToResponseDto(Car car);
 }
