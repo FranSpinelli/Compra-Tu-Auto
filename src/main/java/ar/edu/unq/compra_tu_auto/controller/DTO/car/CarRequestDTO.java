@@ -1,9 +1,11 @@
 package ar.edu.unq.compra_tu_auto.controller.DTO.car;
 
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
@@ -23,6 +25,7 @@ public class CarRequestDTO {
 
     @NotNull(message = "Manufacture Year field is required.")
     @Positive(message = "Manufacture Year field must be greater than 0.")
+    @Min(value = 1900, message = "Manufacture Year field must be greater than 1900.")
     private Integer manufactureYear;
 
     @NotNull(message = "Stock field is required.")

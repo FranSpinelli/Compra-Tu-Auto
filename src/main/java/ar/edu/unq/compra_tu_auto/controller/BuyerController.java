@@ -7,7 +7,14 @@ import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.service.BuyerService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.Optional;
 
@@ -24,28 +31,28 @@ public class BuyerController {
     }
 
     @GetMapping("/{buyerId}")
-    public ResponseEntity<BuyerResponseDTO> getBuyerById(@PathVariable Integer buyerId){
+    public ResponseEntity<BuyerResponseDTO> getBuyerById(@PathVariable Integer buyerId) {
         Optional<Buyer> foundBuyer = buyerService.getBuyerWithId(buyerId);
 
         return foundBuyer.map(buyer ->
-                ResponseEntity.ok(buyerMapper.mapFromModelToDTO(buyer)))
+                ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(buyer)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping()
-    public ResponseEntity<BuyerResponseDTO> createBuyer(@RequestBody @Valid BuyerDTO buyerDTO){
+    public ResponseEntity<BuyerResponseDTO> createBuyer(@RequestBody @Valid BuyerDTO buyerDTO) {
         Buyer buyer = buyerService.createBuyer(buyerDTO);
-        return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(buyer));
+        return ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(buyer));
     }
 
     @PutMapping("/{buyerId}")
-    public ResponseEntity<BuyerResponseDTO> updateBuyer(@PathVariable Integer buyerId, @RequestBody @Valid BuyerDTO buyerDTO){
+    public ResponseEntity<BuyerResponseDTO> updateBuyer(@PathVariable Integer buyerId, @RequestBody @Valid BuyerDTO buyerDTO) {
         Buyer updatedBuyer = buyerService.updateBuyer(buyerId, buyerDTO);
-        return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(updatedBuyer));
+        return ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(updatedBuyer));
     }
 
     @DeleteMapping("/{buyerId}")
-    public ResponseEntity<Void>  deleteBuyer(@PathVariable Integer buyerId){
+    public ResponseEntity<Void>  deleteBuyer(@PathVariable Integer buyerId) {
         buyerService.deleteBuyer(buyerId);
         return ResponseEntity.noContent().build();
     }
