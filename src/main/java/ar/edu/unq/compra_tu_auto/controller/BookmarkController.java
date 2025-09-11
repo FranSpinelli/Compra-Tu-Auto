@@ -10,10 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
-@RequestMapping("/bookmarks")
+@RequestMapping("/buyers/{buyerId}/bookmarks")
 public class BookmarkController {
 
     private final BookmarkMapper bookmarkMapper;
