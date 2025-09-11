@@ -45,7 +45,7 @@ public class BookmarkController {
 
     @DeleteMapping("/{bookmarkId}")
     public ResponseEntity<Void> deleteBookmark(@PathVariable Integer bookmarkId, @PathVariable String buyerId) {
-        bookmarkService.deleteBookmark(bookmarkId);
+        bookmarkService.deleteBookmarkById(bookmarkId);
         return ResponseEntity.noContent().build();
     }
 }

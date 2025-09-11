@@ -13,5 +13,5 @@ public interface BookmarkService {
 
     Optional<Bookmark> getBookmarkWithBookmarkId(Integer bookmarkId);
 
-    void deleteBookmark(Integer bookmarkId);
+    void deleteBookmarkById(Integer bookmarkId);
 }
