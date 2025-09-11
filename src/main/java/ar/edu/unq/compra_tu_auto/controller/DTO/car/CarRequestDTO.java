@@ -1,6 +1,11 @@
 package ar.edu.unq.compra_tu_auto.controller.DTO.car;
 
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data

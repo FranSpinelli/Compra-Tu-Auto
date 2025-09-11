@@ -38,7 +38,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         Car carToBePurchased = carService.getCarWithId(purchaseRequestDTO.getCarDealershipId(), purchaseRequestDTO.getCarId())
                     .orElseThrow(() -> new ElementNotFoundException("Car", purchaseRequestDTO.getCarId().toString()));
 
-        if(carToBePurchased.getStock() < 1){
+        if (carToBePurchased.getStock() < 1) {
             throw new InsufficientStockException("Car", carToBePurchased.getId());
         }
 
