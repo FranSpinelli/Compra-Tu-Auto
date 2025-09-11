@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.bookmark;
 
 import ar.edu.unq.compra_tu_auto.model.Car;
 import lombok.Data;

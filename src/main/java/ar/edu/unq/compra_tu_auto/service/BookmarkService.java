@@ -1,15 +1,15 @@
 package ar.edu.unq.compra_tu_auto.service;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
 
 import java.util.Optional;
 
 public interface BookmarkService {
 
-    Bookmark createBookmark(BookmarkDTO bookmarkDTO);
+    Bookmark createBookmark(BookmarkRequestDTO bookmarkRequestDTO);
 
-    Bookmark updateBookmark(Integer bookmarkId, BookmarkDTO bookmarkDTO);
+    Bookmark updateBookmark(Integer bookmarkId, BookmarkRequestDTO bookmarkRequestDTO);
 
     Optional<Bookmark> getBookmarkWithBookmarkId(Integer bookmarkId);
 

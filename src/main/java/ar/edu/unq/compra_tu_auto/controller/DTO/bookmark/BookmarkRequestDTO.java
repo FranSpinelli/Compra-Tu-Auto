@@ -1,4 +1,4 @@
-package ar.edu.unq.compra_tu_auto.controller.DTO;
+package ar.edu.unq.compra_tu_auto.controller.DTO.bookmark;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
 @Data
-public class BookmarkDTO {
+public class BookmarkRequestDTO {
 
     @NotNull
     @Positive

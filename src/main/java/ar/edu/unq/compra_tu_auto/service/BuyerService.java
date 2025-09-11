@@ -1,6 +1,5 @@
 package ar.edu.unq.compra_tu_auto.service;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerDTO;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 
 import java.util.Optional;

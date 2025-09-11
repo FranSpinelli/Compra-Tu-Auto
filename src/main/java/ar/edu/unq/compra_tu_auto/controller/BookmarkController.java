@@ -1,7 +1,7 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.BookmarkMapper;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
 import ar.edu.unq.compra_tu_auto.service.BookmarkService;
@@ -32,14 +32,14 @@ public class BookmarkController {
     }
 
     @PostMapping
-    public ResponseEntity<BookmarkResponseDTO> createBookmark(@RequestBody @Valid BookmarkDTO bookmarkDTO) {
-        Bookmark bookmark = bookmarkService.createBookmark(bookmarkDTO);
+    public ResponseEntity<BookmarkResponseDTO> createBookmark(@RequestBody @Valid BookmarkRequestDTO bookmarkRequestDTO) {
+        Bookmark bookmark = bookmarkService.createBookmark(bookmarkRequestDTO);
         return ResponseEntity.ok(bookmarkMapper.mapFromModelToDTO(bookmark));
     }
 
     @PutMapping("/{bookmarkId}")
-    public ResponseEntity<BookmarkResponseDTO> updateBookmark(@PathVariable Integer bookmarkId, @RequestBody BookmarkDTO bookmarkDTO) {
-        Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmarkId, bookmarkDTO);
+    public ResponseEntity<BookmarkResponseDTO> updateBookmark(@PathVariable Integer bookmarkId, @RequestBody BookmarkRequestDTO bookmarkRequestDTO) {
+        Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmarkId, bookmarkRequestDTO);
         return ResponseEntity.ok(bookmarkMapper.mapFromModelToDTO(updatedBookmark));
     }
 

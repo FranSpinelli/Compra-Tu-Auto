@@ -8,7 +8,6 @@ import ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities.BookmarkEntit
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Component
 public class BookmarkRepositoryImpl implements BookmarkRepository {

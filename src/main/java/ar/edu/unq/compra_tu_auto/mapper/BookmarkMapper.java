@@ -1,7 +1,7 @@
 package ar.edu.unq.compra_tu_auto.mapper;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkDTO;
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkResponseDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkResponseDTO;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
 import ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities.BookmarkEntity;
 import org.mapstruct.Mapper;
@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 public interface BookmarkMapper {
 
     BookmarkResponseDTO mapFromModelToDTO(Bookmark bookmark);
-    Bookmark mapFromDTOToModel(BookmarkDTO bookmarkDTO);
+    Bookmark mapFromDTOToModel(BookmarkRequestDTO bookmarkRequestDTO);
     BookmarkEntity mapFromModelToEntity(Bookmark bookmark);
     Bookmark mapFromEntityToModel(BookmarkEntity bookmarkEntity);
 }

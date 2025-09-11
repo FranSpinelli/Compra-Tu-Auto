@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.BookmarkDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BookmarkMapper;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
@@ -9,7 +9,6 @@ import ar.edu.unq.compra_tu_auto.service.BookmarkService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class BookmarkServiceImpl implements BookmarkService {
@@ -23,17 +22,17 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
-    public Bookmark createBookmark(BookmarkDTO bookmarkDTO) {
-        return bookmarkRepository.saveBookmark(bookmarkMapper.mapFromDTOToModel(bookmarkDTO));
+    public Bookmark createBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
+        return bookmarkRepository.saveBookmark(bookmarkMapper.mapFromDTOToModel(bookmarkRequestDTO));
     }
 
     @Override
-    public Bookmark updateBookmark(Integer bookmarkId, BookmarkDTO bookmarkDTO) {
+    public Bookmark updateBookmark(Integer bookmarkId, BookmarkRequestDTO bookmarkRequestDTO) {
         Bookmark foundBookmarkToEdit = bookmarkRepository.getBookmarkWithBookmarkId(bookmarkId)
                 .orElseThrow(() -> new ElementNotFoundException("Bookmark", bookmarkId.toString()));
 
-        foundBookmarkToEdit.setScore(bookmarkDTO.getScore());
-        foundBookmarkToEdit.setReview(bookmarkDTO.getReview());
+        foundBookmarkToEdit.setScore(bookmarkRequestDTO.getScore());
+        foundBookmarkToEdit.setReview(bookmarkRequestDTO.getReview());
 
         return bookmarkRepository.saveBookmark(foundBookmarkToEdit);
     }
