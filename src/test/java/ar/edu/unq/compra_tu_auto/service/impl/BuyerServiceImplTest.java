@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerRequestDTO;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.repository.BuyerRepository;
@@ -33,7 +33,7 @@ public class BuyerServiceImplTest {
 
     @Test
     public void createBuyerTest() {
-        BuyerDTO buyerDTO = mock(BuyerDTO.class);
+        BuyerRequestDTO buyerDTO = mock(BuyerRequestDTO.class);
         Buyer mockBuyer = mock(Buyer.class);
         when(buyerMapper.mapFromRequestDTOToModel(eq(buyerDTO))).thenReturn(mockBuyer);
         when(buyerRepository.saveBuyer(eq(mockBuyer))).thenReturn(mockBuyer);
@@ -49,7 +49,7 @@ public class BuyerServiceImplTest {
     public void updateBuyerTest() {
         Integer buyerId = 1;
 
-        BuyerDTO buyerDTO = new BuyerDTO();
+        BuyerRequestDTO buyerDTO = new BuyerRequestDTO();
         buyerDTO.setFirstName("foo");
         buyerDTO.setLastName("bar");
         buyerDTO.setEmail("baz@gmail.com");
@@ -73,7 +73,7 @@ public class BuyerServiceImplTest {
     @Test
     public void updateBuyerWithNonExistentBuyerTest() {
         Integer buyerId = 1;
-        BuyerDTO buyerDTO = new BuyerDTO();
+        BuyerRequestDTO buyerDTO = new BuyerRequestDTO();
         when(buyerRepository.getBuyerWithId(eq(buyerId))).thenReturn(Optional.empty());
 
         ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () ->

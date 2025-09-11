@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Car {
 
-    private Integer id;
+    private Integer carId;
     private String brand;
     private String model;
     private String color;

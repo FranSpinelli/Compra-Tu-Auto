@@ -39,7 +39,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                     .orElseThrow(() -> new ElementNotFoundException("Car", purchaseRequestDTO.getCarId().toString()));
 
         if (carToBePurchased.getStock() < 1) {
-            throw new InsufficientStockException("Car", carToBePurchased.getId());
+            throw new InsufficientStockException("Car", carToBePurchased.getCarId());
         }
 
         carToBePurchased.setStock(carToBePurchased.getStock() - 1);

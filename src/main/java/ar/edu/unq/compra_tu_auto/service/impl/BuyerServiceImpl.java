@@ -1,6 +1,6 @@
 package ar.edu.unq.compra_tu_auto.service.impl;
 
-import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
@@ -22,12 +22,12 @@ public class BuyerServiceImpl implements BuyerService {
     }
 
     @Override
-    public Buyer createBuyer(BuyerDTO buyerDTO) {
+    public Buyer createBuyer(BuyerRequestDTO buyerDTO) {
         return buyerRepository.saveBuyer(buyerMapper.mapFromRequestDTOToModel(buyerDTO));
     }
 
     @Override
-    public Buyer updateBuyer(Integer buyerId, BuyerDTO buyerDTO) {
+    public Buyer updateBuyer(Integer buyerId, BuyerRequestDTO buyerDTO) {
         Buyer foundBuyerToEdit = buyerRepository.getBuyerWithId(buyerId)
                 .orElseThrow(() -> new ElementNotFoundException("Buyer", buyerId.toString()));
 
