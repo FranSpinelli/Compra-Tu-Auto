@@ -8,7 +8,7 @@ public interface CarRepository {
 
     Car saveCar(Car carToBeCreated);
 
-    Optional<Car> getCarWithId(Integer carId);
+    Optional<Car> getCarByIdAndDealershipId(Integer carId, Integer dealershipId);
 
-    void deleteCar(Integer carId);
+    void deleteCar(Integer carId, Integer dealershipId);
 }
