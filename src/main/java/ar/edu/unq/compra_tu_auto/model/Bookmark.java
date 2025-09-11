@@ -9,4 +9,5 @@ public class Bookmark {
     private Integer score;
     private String review;
     private Car car;
+    private Buyer buyer;
 }
