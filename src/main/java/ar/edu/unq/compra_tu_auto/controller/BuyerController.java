@@ -1,5 +1,7 @@
 package ar.edu.unq.compra_tu_auto.controller;
 
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerRequestDTO;
+import ar.edu.unq.compra_tu_auto.controller.DTO.buyer.BuyerResponseDTO;
 import ar.edu.unq.compra_tu_auto.mapper.BuyerMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.service.BuyerService;
@@ -31,13 +33,13 @@ public class BuyerController {
     }
 
     @PostMapping()
-    public ResponseEntity<BuyerResponseDTO> createBuyer(@RequestBody @Valid BuyerDTO buyerDTO){
+    public ResponseEntity<BuyerResponseDTO> createBuyer(@RequestBody @Valid BuyerRequestDTO buyerDTO){
         Buyer buyer = buyerService.createBuyer(buyerDTO);
         return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(buyer));
     }
 
     @PutMapping("/{buyerId}")
-    public ResponseEntity<BuyerResponseDTO> updateBuyer(@PathVariable Integer buyerId, @RequestBody @Valid BuyerDTO buyerDTO){
+    public ResponseEntity<BuyerResponseDTO> updateBuyer(@PathVariable Integer buyerId, @RequestBody @Valid BuyerRequestDTO buyerDTO){
         Buyer updatedBuyer = buyerService.updateBuyer(buyerId, buyerDTO);
         return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(updatedBuyer));
     }
