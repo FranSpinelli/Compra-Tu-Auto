@@ -28,7 +28,7 @@ public class CarServiceImpl implements CarService {
     public Car createCar(Integer dealershipId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
 
-        Car car = carMapper.mapFromDtoToModel(carRequestDTO);
+        Car car = carMapper.mapFromRequestDtoToModel(carRequestDTO);
         car.setDealershipId(dealershipId);
 
         return carRepository.saveCar(car);

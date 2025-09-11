@@ -28,20 +28,20 @@ public class BuyerController {
         Optional<Buyer> foundBuyer = buyerService.getBuyerWithId(buyerId);
 
         return foundBuyer.map(buyer ->
-                ResponseEntity.ok(buyerMapper.mapFromModelToDTO(buyer)))
+                ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(buyer)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping()
     public ResponseEntity<BuyerResponseDTO> createBuyer(@RequestBody @Valid BuyerDTO buyerDTO){
         Buyer buyer = buyerService.createBuyer(buyerDTO);
-        return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(buyer));
+        return ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(buyer));
     }
 
     @PutMapping("/{buyerId}")
     public ResponseEntity<BuyerResponseDTO> updateBuyer(@PathVariable Integer buyerId, @RequestBody @Valid BuyerDTO buyerDTO){
         Buyer updatedBuyer = buyerService.updateBuyer(buyerId, buyerDTO);
-        return ResponseEntity.ok(buyerMapper.mapFromModelToDTO(updatedBuyer));
+        return ResponseEntity.ok(buyerMapper.mapFromModelToResponseDTO(updatedBuyer));
     }
 
     @DeleteMapping("/{buyerId}")

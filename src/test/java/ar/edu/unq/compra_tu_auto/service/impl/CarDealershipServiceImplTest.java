@@ -34,13 +34,13 @@ public class CarDealershipServiceImplTest {
     public void createCarTest() {
         CarDealershipRequestDTO carDealershipRequestDTO = mock(CarDealershipRequestDTO.class);
         CarDealership carDealership = mock(CarDealership.class);
-        when(carDealershipMapper.mapFromDtoToModel(eq(carDealershipRequestDTO))).thenReturn(carDealership);
+        when(carDealershipMapper.mapFromRequestDtoToModel(eq(carDealershipRequestDTO))).thenReturn(carDealership);
         when(carDealershipRepository.saveCarDealership(eq(carDealership))).thenReturn(carDealership);
 
         CarDealership result = carDealershipServiceImpl.createCarDealership(carDealershipRequestDTO);
 
         assertEquals(carDealership, result);
-        verify(carDealershipMapper, times(1)).mapFromDtoToModel(eq(carDealershipRequestDTO));
+        verify(carDealershipMapper, times(1)).mapFromRequestDtoToModel(eq(carDealershipRequestDTO));
         verify(carDealershipRepository, times(1)).saveCarDealership(eq(carDealership));
     }
 

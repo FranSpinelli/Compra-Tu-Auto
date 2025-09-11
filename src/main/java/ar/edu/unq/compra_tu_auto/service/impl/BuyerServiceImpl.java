@@ -23,7 +23,7 @@ public class BuyerServiceImpl implements BuyerService {
 
     @Override
     public Buyer createBuyer(BuyerDTO buyerDTO) {
-        return buyerRepository.saveBuyer(buyerMapper.mapFromDTOToModel(buyerDTO));
+        return buyerRepository.saveBuyer(buyerMapper.mapFromRequestDTOToModel(buyerDTO));
     }
 
     @Override

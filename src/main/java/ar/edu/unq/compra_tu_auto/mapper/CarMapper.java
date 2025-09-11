@@ -19,4 +19,6 @@ public interface CarMapper {
     Car mapFromEntityToModel(CarEntity carEntity);
 
     CarResponseDTO mapFromModelToResponseDto(Car car);
+
+    CarRequestDTO mapFromModelToRequestDto(Car car);
 }
