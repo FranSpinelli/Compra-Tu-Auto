@@ -5,12 +5,16 @@ import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkResponseDTO;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
 import ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities.BookmarkEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CarMapper.class, BuyerMapper.class})
 public interface BookmarkMapper {
 
-    BookmarkResponseDTO mapFromModelToDTO(Bookmark bookmark);
-    Bookmark mapFromDTOToModel(BookmarkRequestDTO bookmarkRequestDTO);
+    Bookmark mapFromRequestDTOToModel(BookmarkRequestDTO bookmarkRequestDTO);
+
     BookmarkEntity mapFromModelToEntity(Bookmark bookmark);
+
     Bookmark mapFromEntityToModel(BookmarkEntity bookmarkEntity);
+
+    BookmarkResponseDTO mapFromModelToResponseDTO(Bookmark bookmark);
 }

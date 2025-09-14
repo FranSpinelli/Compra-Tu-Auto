@@ -34,14 +34,14 @@ public class BookmarkServiceImplTest {
     public void createBookmarkTest(){
         BookmarkRequestDTO bookmarkRequestDTO = mock(BookmarkRequestDTO.class);
         Bookmark mockBookmark = mock(Bookmark.class);
-        when(bookmarkMapper.mapFromDTOToModel(eq(bookmarkRequestDTO))).thenReturn(mockBookmark);
+        when(bookmarkMapper.mapFromRequestDTOToModel(eq(bookmarkRequestDTO))).thenReturn(mockBookmark);
         when(bookmarkRepository.saveBookmark(mockBookmark)).thenReturn(mockBookmark);
 
-        Bookmark result = bookmarkServiceImpl.createBookmark(bookmarkRequestDTO);
+        Bookmark result = bookmarkServiceImpl.createBookmark(buyerId, bookmarkRequestDTO);
 
         assertEquals(mockBookmark, result);
         verify(bookmarkRepository, times(1)).saveBookmark(eq(mockBookmark));
-        verify(bookmarkMapper, times(1)).mapFromDTOToModel(eq(bookmarkRequestDTO));
+        verify(bookmarkMapper, times(1)).mapFromRequestDTOToModel(eq(bookmarkRequestDTO));
     }
 
     @Test

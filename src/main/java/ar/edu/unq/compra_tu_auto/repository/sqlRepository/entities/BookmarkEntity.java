@@ -13,11 +13,12 @@ public class BookmarkEntity {
 
     private Integer score;
     private String review;
-    private Boolean deleted;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private CarEntity car;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private BuyerEntity buyer;
+
+    private Boolean deleted;
 }

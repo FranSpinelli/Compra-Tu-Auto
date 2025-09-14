@@ -24,27 +24,27 @@ public class BookmarkController {
     }
 
     @GetMapping("/{bookmarkId}")
-    public ResponseEntity<BookmarkResponseDTO> getBookmarkFromBuyerWithCarId(@PathVariable Integer bookmarkId, @PathVariable String buyerId) {
+    public ResponseEntity<BookmarkResponseDTO> getBookmarkFromBuyerWithCarId(@PathVariable Integer bookmarkId, @PathVariable Integer buyerId) {
         Optional<Bookmark> foundBookmark = bookmarkService.getBookmarkWithBookmarkId(bookmarkId);
 
-        return foundBookmark.map(bookmark -> ResponseEntity.ok(bookmarkMapper.mapFromModelToDTO(bookmark)))
+        return foundBookmark.map(bookmark -> ResponseEntity.ok(bookmarkMapper.mapFromModelToResponseDTO(bookmark)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<BookmarkResponseDTO> createBookmark(@RequestBody @Valid BookmarkRequestDTO bookmarkRequestDTO, @PathVariable String buyerId) {
-        Bookmark bookmark = bookmarkService.createBookmark(bookmarkRequestDTO);
-        return ResponseEntity.ok(bookmarkMapper.mapFromModelToDTO(bookmark));
+    public ResponseEntity<BookmarkResponseDTO> createBookmark(@RequestBody @Valid BookmarkRequestDTO bookmarkRequestDTO, @PathVariable Integer buyerId) {
+        Bookmark bookmark = bookmarkService.createBookmark(buyerId, bookmarkRequestDTO);
+        return ResponseEntity.ok(bookmarkMapper.mapFromModelToResponseDTO(bookmark));
     }
 
     @PutMapping("/{bookmarkId}")
-    public ResponseEntity<BookmarkResponseDTO> updateBookmark(@PathVariable Integer bookmarkId, @RequestBody BookmarkRequestDTO bookmarkRequestDTO, @PathVariable String buyerId) {
+    public ResponseEntity<BookmarkResponseDTO> updateBookmark(@PathVariable Integer bookmarkId, @RequestBody BookmarkRequestDTO bookmarkRequestDTO, @PathVariable Integer buyerId) {
         Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmarkId, bookmarkRequestDTO);
-        return ResponseEntity.ok(bookmarkMapper.mapFromModelToDTO(updatedBookmark));
+        return ResponseEntity.ok(bookmarkMapper.mapFromModelToResponseDTO(updatedBookmark));
     }
 
     @DeleteMapping("/{bookmarkId}")
-    public ResponseEntity<Void> deleteBookmark(@PathVariable Integer bookmarkId, @PathVariable String buyerId) {
+    public ResponseEntity<Void> deleteBookmark(@PathVariable Integer bookmarkId, @PathVariable Integer buyerId) {
         bookmarkService.deleteBookmarkById(bookmarkId);
         return ResponseEntity.noContent().build();
     }

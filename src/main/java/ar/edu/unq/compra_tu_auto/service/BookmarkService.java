@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface BookmarkService {
 
-    Bookmark createBookmark(BookmarkRequestDTO bookmarkRequestDTO);
+    Bookmark createBookmark(Integer buyerId, BookmarkRequestDTO bookmarkRequestDTO);
 
     Bookmark updateBookmark(Integer bookmarkId, BookmarkRequestDTO bookmarkRequestDTO);
 

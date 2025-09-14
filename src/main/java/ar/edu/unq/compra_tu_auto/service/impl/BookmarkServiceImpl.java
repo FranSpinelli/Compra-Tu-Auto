@@ -4,8 +4,12 @@ import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BookmarkMapper;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
+import ar.edu.unq.compra_tu_auto.model.Buyer;
+import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.repository.BookmarkRepository;
 import ar.edu.unq.compra_tu_auto.service.BookmarkService;
+import ar.edu.unq.compra_tu_auto.service.BuyerService;
+import ar.edu.unq.compra_tu_auto.service.CarService;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,15 +19,26 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     private final BookmarkMapper bookmarkMapper;
     private final BookmarkRepository bookmarkRepository;
+    private final BuyerService buyerService;
+    private final CarService carService;
 
-    public BookmarkServiceImpl(BookmarkMapper bookmarkMapper, BookmarkRepository bookmarkRepository) {
+    public BookmarkServiceImpl(BookmarkMapper bookmarkMapper, BookmarkRepository bookmarkRepository, BuyerService buyerService, CarService carService) {
         this.bookmarkMapper = bookmarkMapper;
         this.bookmarkRepository = bookmarkRepository;
+        this.buyerService = buyerService;
+        this.carService = carService;
     }
 
     @Override
-    public Bookmark createBookmark(BookmarkRequestDTO bookmarkRequestDTO) {
-        return bookmarkRepository.saveBookmark(bookmarkMapper.mapFromDTOToModel(bookmarkRequestDTO));
+    public Bookmark createBookmark(Integer buyerId, BookmarkRequestDTO bookmarkRequestDTO) {
+        Buyer buyer = buyerService.getBuyerWithId(buyerId).orElseThrow(() -> new ElementNotFoundException("Buyer", buyerId.toString()));
+        Car carToBeBookMarked = carService.getCarWithId(bookmarkRequestDTO.getCarDealershipId(), bookmarkRequestDTO.getCarId()).orElseThrow(() -> new ElementNotFoundException("Car", bookmarkRequestDTO.getCarId().toString()));
+
+        Bookmark bookmarkToBeSaved = bookmarkMapper.mapFromRequestDTOToModel(bookmarkRequestDTO);
+        bookmarkToBeSaved.setBuyer(buyer);
+        bookmarkToBeSaved.setCar(carToBeBookMarked);
+
+        return bookmarkRepository.saveBookmark(bookmarkToBeSaved);
     }
 
     @Override
