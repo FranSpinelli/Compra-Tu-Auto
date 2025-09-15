@@ -9,9 +9,9 @@ public interface BookmarkService {
 
     Bookmark createBookmark(Integer buyerId, BookmarkRequestDTO bookmarkRequestDTO);
 
-    Bookmark updateBookmark(Integer bookmarkId, BookmarkRequestDTO bookmarkRequestDTO);
+    Bookmark updateBookmark(Integer buyerId, Integer bookmarkId, BookmarkRequestDTO bookmarkRequestDTO);
 
-    Optional<Bookmark> getBookmarkWithBookmarkId(Integer bookmarkId);
+    Optional<Bookmark> getBookmarkWithBookmarkId(Integer buyerId, Integer bookmarkId);
 
-    void deleteBookmarkById(Integer bookmarkId);
+    void deleteBookmarkById(Integer buyerId, Integer bookmarkId);
 }

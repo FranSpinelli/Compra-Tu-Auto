@@ -1,7 +1,8 @@
 package ar.edu.unq.compra_tu_auto.model;
 
 import lombok.Data;
-import java.util.Set;
+
+import java.util.List;
 
 @Data
 public class Buyer {
@@ -10,6 +11,5 @@ public class Buyer {
     private String firstName;
     private String lastName;
     private String email;
-
-    private Set<Bookmark> bookmarks;
+    private List<Bookmark> bookmarks;
 }

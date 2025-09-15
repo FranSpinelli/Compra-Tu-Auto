@@ -25,7 +25,7 @@ public class BookmarkController {
 
     @GetMapping("/{bookmarkId}")
     public ResponseEntity<BookmarkResponseDTO> getBookmarkFromBuyerWithCarId(@PathVariable Integer bookmarkId, @PathVariable Integer buyerId) {
-        Optional<Bookmark> foundBookmark = bookmarkService.getBookmarkWithBookmarkId(bookmarkId);
+        Optional<Bookmark> foundBookmark = bookmarkService.getBookmarkWithBookmarkId(buyerId, bookmarkId);
 
         return foundBookmark.map(bookmark -> ResponseEntity.ok(bookmarkMapper.mapFromModelToResponseDTO(bookmark)))
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -39,13 +39,13 @@ public class BookmarkController {
 
     @PutMapping("/{bookmarkId}")
     public ResponseEntity<BookmarkResponseDTO> updateBookmark(@PathVariable Integer bookmarkId, @RequestBody BookmarkRequestDTO bookmarkRequestDTO, @PathVariable Integer buyerId) {
-        Bookmark updatedBookmark = bookmarkService.updateBookmark(bookmarkId, bookmarkRequestDTO);
+        Bookmark updatedBookmark = bookmarkService.updateBookmark(buyerId, bookmarkId, bookmarkRequestDTO);
         return ResponseEntity.ok(bookmarkMapper.mapFromModelToResponseDTO(updatedBookmark));
     }
 
     @DeleteMapping("/{bookmarkId}")
     public ResponseEntity<Void> deleteBookmark(@PathVariable Integer bookmarkId, @PathVariable Integer buyerId) {
-        bookmarkService.deleteBookmarkById(bookmarkId);
+        bookmarkService.deleteBookmarkById(buyerId, bookmarkId);
         return ResponseEntity.noContent().build();
     }
 }

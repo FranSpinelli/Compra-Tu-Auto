@@ -60,7 +60,7 @@ public class BookmarkServiceImplTest {
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.of(foundBookmark));
         when(bookmarkRepository.saveBookmark(any(Bookmark.class))).thenReturn(updatedBookmark);
 
-        Bookmark result = bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkRequestDTO);
+        Bookmark result = bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkId, bookmarkRequestDTO);
 
         assertEquals(updatedBookmark, result);
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -76,7 +76,7 @@ public class BookmarkServiceImplTest {
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.empty());
 
         ElementNotFoundException exception = assertThrows(ElementNotFoundException.class,
-                () -> bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkRequestDTO));
+                () -> bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkId, bookmarkRequestDTO));
 
         assertEquals("Bookmark with Id: " + bookmarkId + " not found", exception.getMessage());
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -89,7 +89,7 @@ public class BookmarkServiceImplTest {
         Bookmark mockBookmark = mock(Bookmark.class);
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.of(mockBookmark));
 
-        Optional<Bookmark> result = bookmarkServiceImpl.getBookmarkWithBookmarkId(bookmarkId);
+        Optional<Bookmark> result = bookmarkServiceImpl.getBookmarkWithBookmarkId(bookmarkId, bookmarkId);
 
         assertEquals(mockBookmark, result.get());
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -99,7 +99,7 @@ public class BookmarkServiceImplTest {
     public void deleteBookmarkByIdTest(){
         Integer bookmarkId = 1;
 
-        bookmarkServiceImpl.deleteBookmarkById(bookmarkId);
+        bookmarkServiceImpl.deleteBookmarkById(bookmarkId, bookmarkId);
 
         verify(bookmarkRepository, times(1)).deleteBookmarkWithBookmarkId(eq(bookmarkId));
     }

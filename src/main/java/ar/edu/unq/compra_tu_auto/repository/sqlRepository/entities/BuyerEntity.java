@@ -3,7 +3,7 @@ package ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,6 +17,6 @@ public class BuyerEntity {
     private String email;
     private Boolean deleted;
 
-    @OneToMany(mappedBy = "buyer")
-    private Set<BookmarkEntity> bookmarks;
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookmarkEntity> bookmarks;
 }

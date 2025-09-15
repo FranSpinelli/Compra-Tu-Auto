@@ -12,8 +12,10 @@ public interface BookmarkMapper {
 
     Bookmark mapFromRequestDTOToModel(BookmarkRequestDTO bookmarkRequestDTO);
 
+    @Mapping(source = "buyerId", target = "buyer.id")
     BookmarkEntity mapFromModelToEntity(Bookmark bookmark);
 
+    @Mapping(source = "buyer.id", target = "buyerId")
     Bookmark mapFromEntityToModel(BookmarkEntity bookmarkEntity);
 
     BookmarkResponseDTO mapFromModelToResponseDTO(Bookmark bookmark);
