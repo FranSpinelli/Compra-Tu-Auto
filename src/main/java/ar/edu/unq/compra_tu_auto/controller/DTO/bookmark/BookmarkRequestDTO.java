@@ -1,6 +1,10 @@
 package ar.edu.unq.compra_tu_auto.controller.DTO.bookmark;
 
-import jakarta.validation.constraints.*;
+
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data

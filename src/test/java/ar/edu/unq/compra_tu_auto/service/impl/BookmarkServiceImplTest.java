@@ -4,7 +4,11 @@ import ar.edu.unq.compra_tu_auto.controller.DTO.bookmark.BookmarkRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.mapper.BookmarkMapper;
 import ar.edu.unq.compra_tu_auto.model.Bookmark;
+import ar.edu.unq.compra_tu_auto.model.Buyer;
+import ar.edu.unq.compra_tu_auto.model.Car;
 import ar.edu.unq.compra_tu_auto.repository.BookmarkRepository;
+import ar.edu.unq.compra_tu_auto.service.BuyerService;
+import ar.edu.unq.compra_tu_auto.service.CarService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,10 +34,20 @@ public class BookmarkServiceImplTest {
     @Mock
     private BookmarkMapper bookmarkMapper;
 
+    @Mock
+    private BuyerService buyerService;
+
+    @Mock
+    private CarService carService;
+
     @Test
     public void createBookmarkTest(){
+        Integer buyerId = 1;
+
         BookmarkRequestDTO bookmarkRequestDTO = mock(BookmarkRequestDTO.class);
         Bookmark mockBookmark = mock(Bookmark.class);
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
+        when(carService.getCarWithId(any(), any())).thenReturn(Optional.of(mock(Car.class)));
         when(bookmarkMapper.mapFromRequestDTOToModel(eq(bookmarkRequestDTO))).thenReturn(mockBookmark);
         when(bookmarkRepository.saveBookmark(mockBookmark)).thenReturn(mockBookmark);
 
@@ -45,7 +59,23 @@ public class BookmarkServiceImplTest {
     }
 
     @Test
+    public void createBookmarkOfInexistentCarTest(){
+        Integer buyerId = 1;
+        BookmarkRequestDTO bookmarkRequestDTO = mock(BookmarkRequestDTO.class);
+        when(bookmarkRequestDTO.getCarId()).thenReturn(1);
+        when(bookmarkRequestDTO.getCarDealershipId()).thenReturn(1);
+
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
+        when(carService.getCarWithId(eq(1), eq(1))).thenReturn(Optional.empty());
+
+        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> bookmarkServiceImpl.createBookmark(buyerId, bookmarkRequestDTO));
+
+        assertEquals("Car with Id: " + 1 + " not found", exception.getMessage());
+    }
+
+    @Test
     public void updateBookmarkTest(){
+        Integer buyerId = 1;
         Integer bookmarkId = 1;
         Integer expectedScore = 3;
         String expectedReview = "Esta es una review de un auto";
@@ -57,10 +87,11 @@ public class BookmarkServiceImplTest {
         Bookmark foundBookmark = mock(Bookmark.class);
         Bookmark updatedBookmark = mock(Bookmark.class);
 
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.of(foundBookmark));
         when(bookmarkRepository.saveBookmark(any(Bookmark.class))).thenReturn(updatedBookmark);
 
-        Bookmark result = bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkId, bookmarkRequestDTO);
+        Bookmark result = bookmarkServiceImpl.updateBookmark(buyerId, bookmarkId, bookmarkRequestDTO);
 
         assertEquals(updatedBookmark, result);
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -70,13 +101,16 @@ public class BookmarkServiceImplTest {
     }
 
     @Test
-    public void updateBookmarkNotFoundTest(){
+    public void updateInexistentBookmarkNotFoundTest(){
         Integer bookmarkId = 1;
+        Integer buyerId = 1;
+
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
         BookmarkRequestDTO bookmarkRequestDTO = new BookmarkRequestDTO();
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.empty());
 
         ElementNotFoundException exception = assertThrows(ElementNotFoundException.class,
-                () -> bookmarkServiceImpl.updateBookmark(bookmarkId, bookmarkId, bookmarkRequestDTO));
+                () -> bookmarkServiceImpl.updateBookmark(buyerId, bookmarkId, bookmarkRequestDTO));
 
         assertEquals("Bookmark with Id: " + bookmarkId + " not found", exception.getMessage());
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -86,10 +120,13 @@ public class BookmarkServiceImplTest {
     @Test
     public void getBookmarkByIdTest(){
         Integer bookmarkId = 1;
+        Integer buyerId = 1;
+
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
         Bookmark mockBookmark = mock(Bookmark.class);
         when(bookmarkRepository.getBookmarkWithBookmarkId(eq(bookmarkId))).thenReturn(Optional.of(mockBookmark));
 
-        Optional<Bookmark> result = bookmarkServiceImpl.getBookmarkWithBookmarkId(bookmarkId, bookmarkId);
+        Optional<Bookmark> result = bookmarkServiceImpl.getBookmarkWithBookmarkId(buyerId, bookmarkId);
 
         assertEquals(mockBookmark, result.get());
         verify(bookmarkRepository, times(1)).getBookmarkWithBookmarkId(eq(bookmarkId));
@@ -98,9 +135,25 @@ public class BookmarkServiceImplTest {
     @Test
     public void deleteBookmarkByIdTest(){
         Integer bookmarkId = 1;
+        Integer buyerId = 1;
 
-        bookmarkServiceImpl.deleteBookmarkById(bookmarkId, bookmarkId);
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.of(mock(Buyer.class)));
+
+        bookmarkServiceImpl.deleteBookmarkById(buyerId, bookmarkId);
 
         verify(bookmarkRepository, times(1)).deleteBookmarkWithBookmarkId(eq(bookmarkId));
+    }
+
+    @Test
+    public void deleteBookmarkOfInexistentBuyerTest(){
+        Integer bookmarkId = 1;
+        Integer buyerId = 1;
+
+        when(buyerService.getBuyerWithId(eq(buyerId))).thenReturn(Optional.empty());
+
+        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> bookmarkServiceImpl.deleteBookmarkById(buyerId, bookmarkId));
+
+        assertEquals("Buyer with Id: " + buyerId + " not found", exception.getMessage());
+        verify(bookmarkRepository, never()).deleteBookmarkWithBookmarkId(eq(bookmarkId));
     }
 }
