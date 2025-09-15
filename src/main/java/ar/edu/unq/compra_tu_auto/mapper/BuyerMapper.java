@@ -6,7 +6,7 @@ import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities.BuyerEntity;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = BookmarkMapper.class)
 public interface BuyerMapper {
 
     Buyer mapFromRequestDTOToModel(BuyerRequestDTO buyerDTO);

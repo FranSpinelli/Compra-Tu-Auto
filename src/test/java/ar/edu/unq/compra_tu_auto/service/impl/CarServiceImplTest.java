@@ -128,4 +128,16 @@ public class CarServiceImplTest {
 
         verify(carRepository, times(1)).deleteCar(eq(carId), eq(carDealershipId));
     }
+
+    @Test
+    public void deleteCarOfInexistentDealershipTest() {
+        Integer carDealershipId = 1;
+        Integer carId = 1;
+
+        when(carDealershipService.getCarDealershipWithId(eq(carDealershipId))).thenReturn(Optional.empty());
+        ElementNotFoundException exception = assertThrows(ElementNotFoundException.class, () -> carServiceImpl.deleteCar(carId, carId));
+
+        assertEquals("Car Dealership with Id: " + carDealershipId + " not found", exception.getMessage());
+        verify(carRepository, never()).deleteCar(eq(carId), eq(carDealershipId));
+    }
 }
