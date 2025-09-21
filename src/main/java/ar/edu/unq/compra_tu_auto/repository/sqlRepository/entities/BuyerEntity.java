@@ -6,6 +6,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Entity
+@Table(name = "buyers")
 @Data
 public class BuyerEntity {
 
