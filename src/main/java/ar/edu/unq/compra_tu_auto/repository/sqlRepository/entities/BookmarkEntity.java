@@ -9,7 +9,7 @@ import lombok.Data;
 public class BookmarkEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookmarkId;
 
     private Integer score;

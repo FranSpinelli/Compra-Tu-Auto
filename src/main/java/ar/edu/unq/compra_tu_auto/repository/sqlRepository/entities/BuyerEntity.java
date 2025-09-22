@@ -11,7 +11,7 @@ import java.util.Set;
 public class BuyerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     private String firstName;
     private String lastName;
