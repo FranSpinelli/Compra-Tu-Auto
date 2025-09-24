@@ -1,6 +1,7 @@
 package ar.edu.unq.compra_tu_auto.repository.sqlRepository.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
                 @UniqueConstraint(columnNames = {"company_name", "model_name"})
         }
 )
+@Data
 public class CarModelEntity {
 
     @Id

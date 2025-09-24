@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
 import lombok.Data;
 
 @Entity
@@ -19,19 +20,15 @@ public class CarEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String brand;
-
-    private String model;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "car_model_id", nullable = false)
+    private CarModelEntity carModel;
 
     private String color;
 
-    private Integer manufactureYear;
-
-    private Integer stock;
+    private Integer manufacturingYear;
 
     private Double price;
-
-    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private CarDealershipEntity carDealership;

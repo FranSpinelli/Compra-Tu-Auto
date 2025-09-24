@@ -61,7 +61,7 @@ public class CarServiceImplTest {
         carRequestDTO.setBrand("Toyota");
         carRequestDTO.setModel("Corolla");
         carRequestDTO.setColor("Red");
-        carRequestDTO.setManufactureYear(2020);
+        carRequestDTO.setManufacturingYear(2020);
         carRequestDTO.setStock(10);
         carRequestDTO.setPrice(20000.0);
         carRequestDTO.setDescription("A reliable car");

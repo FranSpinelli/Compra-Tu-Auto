@@ -5,14 +5,11 @@ import lombok.Data;
 @Data
 public class Car {
 
-    private Integer carId;
-    private String brand;
-    private String model;
+    private Integer id;
+    private Integer carModelId;
     private String color;
-    private Integer manufactureYear;
-    private Integer stock;
+    private Integer manufacturingYear;
     private Double price;
-    private String description;
     private Integer dealershipId;
     private Boolean deleted;
 }

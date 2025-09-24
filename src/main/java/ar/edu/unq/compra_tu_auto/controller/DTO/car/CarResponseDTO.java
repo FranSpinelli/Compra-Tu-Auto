@@ -6,12 +6,9 @@ import lombok.Data;
 public class CarResponseDTO {
 
     private Integer id;
-    private String brand;
-    private String model;
+    private Integer carModelId;
     private String color;
-    private Integer manufactureYear;
-    private Integer stock;
+    private Integer manufacturingYear;
     private Double price;
-    private String description;
     private Integer dealershipId;
 }

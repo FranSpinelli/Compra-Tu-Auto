@@ -10,9 +10,9 @@ public interface CarService {
 
     Car createCar(Integer dealershipId, CarRequestDTO carRequestDTO);
 
-    Car updateCar(Integer dealershipId, Integer carId, CarRequestDTO carRequestDTO);
+    /*Car updateCar(Integer dealershipId, Integer carId, CarRequestDTO carRequestDTO);
 
     Optional<Car> getCarWithId(Integer dealershipId, Integer carId);
 
-    void deleteCar(Integer dealershipId, Integer carId);
+    void deleteCar(Integer dealershipId, Integer carId);*/
 }

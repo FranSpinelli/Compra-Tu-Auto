@@ -2,14 +2,15 @@ package ar.edu.unq.compra_tu_auto.service.impl;
 
 import ar.edu.unq.compra_tu_auto.controller.DTO.car.CarRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
+import ar.edu.unq.compra_tu_auto.exception.InvalidCarSpecificationException;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Car;
+import ar.edu.unq.compra_tu_auto.model.CarModel;
 import ar.edu.unq.compra_tu_auto.repository.CarRepository;
 import ar.edu.unq.compra_tu_auto.service.CarDealershipService;
+import ar.edu.unq.compra_tu_auto.service.CarModelService;
 import ar.edu.unq.compra_tu_auto.service.CarService;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CarServiceImpl implements CarService {
@@ -17,16 +18,20 @@ public class CarServiceImpl implements CarService {
     private final CarMapper carMapper;
     private final CarRepository carRepository;
     private final CarDealershipService carDealershipService;
+    private final CarModelService carModelService;
 
-    public CarServiceImpl(CarMapper carMapper, CarRepository carRepository, CarDealershipService carDealershipService) {
+    public CarServiceImpl(CarMapper carMapper, CarRepository carRepository, CarDealershipService carDealershipService, CarModelService carModelService) {
         this.carMapper = carMapper;
         this.carRepository = carRepository;
         this.carDealershipService = carDealershipService;
+        this.carModelService = carModelService;
     }
 
     @Override
     public Car createCar(Integer dealershipId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
+
+        verifyCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
 
         Car car = carMapper.mapFromRequestDtoToModel(carRequestDTO);
         car.setDealershipId(dealershipId);
@@ -34,7 +39,7 @@ public class CarServiceImpl implements CarService {
         return carRepository.saveCar(car);
     }
 
-    @Override
+    /*@Override
     public Car updateCar(Integer dealershipId, Integer carId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
 
@@ -62,9 +67,20 @@ public class CarServiceImpl implements CarService {
         verifyCarDealershipExists(dealershipId);
 
         carRepository.deleteCar(carId, dealershipId);
-    }
+    }*/
 
     private void verifyCarDealershipExists(Integer dealershipId) {
         carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
+    }
+
+    private void verifyCarModelExistsAndHasColorAndManufacturingYear(CarRequestDTO carRequestDTO) {
+        CarModel carModel = carModelService.getCarModelWithId(carRequestDTO.getCarModelId()).orElseThrow(() -> new ElementNotFoundException("Car Model", carRequestDTO.getCarModelId().toString()));
+        if(carModel.getColors().stream().noneMatch(carModelColor -> carModelColor.equalsIgnoreCase(carRequestDTO.getColor()))){
+            throw new InvalidCarSpecificationException("Color", carRequestDTO.getColor(), carModel.getId().toString());
+        }
+
+        if(carModel.getManufacturingYears().stream().noneMatch(carModelManufacturingYear -> carModelManufacturingYear.equals(carRequestDTO.getManufacturingYear()))){
+            throw new InvalidCarSpecificationException("Manufacturing Year", carRequestDTO.getManufacturingYear().toString(), carModel.getId().toString());
+        }
     }
 }

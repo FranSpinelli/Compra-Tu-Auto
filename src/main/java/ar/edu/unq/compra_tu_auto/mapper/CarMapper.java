@@ -12,9 +12,11 @@ public interface CarMapper {
 
     Car mapFromRequestDtoToModel(CarRequestDTO carRequestDto);
 
+    @Mapping(source = "carModelId", target = "carModel.id")
     @Mapping(source = "dealershipId", target = "carDealership.id")
     CarEntity mapFromModelToEntity(Car car);
 
+    @Mapping(source = "carModel.id", target = "carModelId")
     @Mapping(source = "carDealership.id", target = "dealershipId")
     Car mapFromEntityToModel(CarEntity carEntity);
 
