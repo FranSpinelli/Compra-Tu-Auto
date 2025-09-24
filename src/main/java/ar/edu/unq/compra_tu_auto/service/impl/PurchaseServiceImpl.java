@@ -2,10 +2,10 @@ package ar.edu.unq.compra_tu_auto.service.impl;
 
 import ar.edu.unq.compra_tu_auto.controller.DTO.purchase.PurchaseRequestDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
-import ar.edu.unq.compra_tu_auto.exception.InsufficientStockException;
 import ar.edu.unq.compra_tu_auto.mapper.CarMapper;
 import ar.edu.unq.compra_tu_auto.model.Buyer;
 import ar.edu.unq.compra_tu_auto.model.Car;
+import ar.edu.unq.compra_tu_auto.model.CarModel;
 import ar.edu.unq.compra_tu_auto.model.Purchase;
 import ar.edu.unq.compra_tu_auto.repository.PurchaseRepository;
 import ar.edu.unq.compra_tu_auto.service.BuyerService;
@@ -30,7 +30,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         this.purchaseRepository = purchaseRepository;
     }
 
-    @Override
+    /*@Override
     public Purchase createPurchase(PurchaseRequestDTO purchaseRequestDTO) {
         Buyer buyer = buyerService.getBuyerWithId(purchaseRequestDTO.getBuyerId())
                 .orElseThrow(() -> new ElementNotFoundException("Buyer", purchaseRequestDTO.getBuyerId().toString()));
@@ -38,16 +38,21 @@ public class PurchaseServiceImpl implements PurchaseService {
         Car carToBePurchased = carService.getCarWithId(purchaseRequestDTO.getCarDealershipId(), purchaseRequestDTO.getCarId())
                     .orElseThrow(() -> new ElementNotFoundException("Car", purchaseRequestDTO.getCarId().toString()));
 
-        if (carToBePurchased.getStock() < 1) {
-            throw new InsufficientStockException("Car", carToBePurchased.getCarId());
-        }
+        Purchase purchase = generateNewPurchase(carToBePurchased);
 
-        carToBePurchased.setStock(carToBePurchased.getStock() - 1);
-        carService.updateCar(purchaseRequestDTO.getCarDealershipId(), purchaseRequestDTO.getBuyerId(), carMapper.mapFromModelToRequestDto(carToBePurchased));
-
-        Purchase purchaseToBeCreated = new Purchase(null, buyer, carToBePurchased, false);
-        return purchaseRepository.savePurchase(purchaseToBeCreated);
+        //return purchaseRepository.savePurchase(purchaseToBeCreated);
     }
+
+    private Purchase generateNewPurchase(Car carToBePurchased) {
+        Purchase purchase = new Purchase();
+        purchase.setPurchaseValue(carToBePurchased.getPrice());
+        purchase.setCarCompanyName(carToBePurchased.getCarModel().getCompanyName());
+        purchase.setCarModelName(carToBePurchased.getCarModel().getModelName());
+        purchase.setCarManufacturingYear(carToBePurchased.getManufacturingYear());
+        purchase.setCarColor(carToBePurchased.getColor());
+        //purchase.setLicensePlate(LicensePlateGenerator.generateNewLicensePlate());
+        purchase.setDeleted(false);
+    }*/
 
     @Override
     public Optional<Purchase> getPurchaseWithId(Integer purchaseId) {

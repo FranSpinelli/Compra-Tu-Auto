@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class CarModel {
+
     private Integer id;
     private String companyName;
     private String modelName;

@@ -19,11 +19,17 @@ public class PurchaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private BuyerEntity buyerId;
+    private Double purchaseValue;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    private CarEntity carId;
+    private String carCompanyName;
+
+    private String carModelName;
+
+    private Integer carManufacturingYear;
+
+    private String carColor;
+
+    private String licensePlate;
 
     private Boolean deleted;
 }

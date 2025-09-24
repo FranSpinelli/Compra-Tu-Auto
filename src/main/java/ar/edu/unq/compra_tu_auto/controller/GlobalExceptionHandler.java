@@ -3,7 +3,6 @@ package ar.edu.unq.compra_tu_auto.controller;
 import ar.edu.unq.compra_tu_auto.controller.DTO.error.GenericErrorResponseDTO;
 import ar.edu.unq.compra_tu_auto.exception.ElementNotFoundException;
 import ar.edu.unq.compra_tu_auto.controller.DTO.error.ValidationErrorResponseDTO;
-import ar.edu.unq.compra_tu_auto.exception.InsufficientStockException;
 import ar.edu.unq.compra_tu_auto.exception.InvalidCarSpecificationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +25,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidCarSpecificationException.class)
     public ResponseEntity<GenericErrorResponseDTO> handleInvalidCarSpecificationException(InvalidCarSpecificationException invalidCarSpecificationException) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new GenericErrorResponseDTO(invalidCarSpecificationException.getMessage()));
-    }
-
-    @ExceptionHandler(InsufficientStockException.class)
-    public ResponseEntity<GenericErrorResponseDTO> handleInsufficientStockException(InsufficientStockException insufficientStockException) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new GenericErrorResponseDTO(insufficientStockException.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

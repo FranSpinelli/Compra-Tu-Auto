@@ -6,7 +6,7 @@ import lombok.Data;
 public class Car {
 
     private Integer id;
-    private Integer carModelId;
+    private CarModel carModel;
     private String color;
     private Integer manufacturingYear;
     private Double price;

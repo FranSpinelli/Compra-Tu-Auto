@@ -28,8 +28,8 @@ public class PurchaseController {
         this.purchaseMapper = purchaseMapper;
     }
 
-    @PostMapping()
-    public ResponseEntity<PurchaseResponseDTO> createPurchase(@RequestBody @Valid PurchaseRequestDTO purchaseRequestDTO) {
+    //@PostMapping()
+    /*public ResponseEntity<PurchaseResponseDTO> createPurchase(@RequestBody @Valid PurchaseRequestDTO purchaseRequestDTO) {
         Purchase createdePurchase = purchaseService.createPurchase(purchaseRequestDTO);
         return ResponseEntity.status(201).body(purchaseMapper.mapFromModelToResponseDTO(createdePurchase));
     }
@@ -41,5 +41,5 @@ public class PurchaseController {
         return purchaseWithId.map(purchase ->
                         ResponseEntity.ok(purchaseMapper.mapFromModelToResponseDTO(purchase))
                 ).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+    }*/
 }

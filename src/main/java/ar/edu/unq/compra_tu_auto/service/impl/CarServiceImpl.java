@@ -32,7 +32,7 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car createCar(Integer dealershipId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
-        verifyCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
+        returnIfCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
 
         Car car = carMapper.mapFromRequestDtoToModel(carRequestDTO);
         car.setDealershipId(dealershipId);
@@ -43,10 +43,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car updateCar(Integer dealershipId, Integer carId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
-        verifyCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
+        CarModel carModel = returnIfCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
 
         Car foundCarToEdit = carRepository.getCarByIdAndDealershipId(carId, dealershipId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
-        foundCarToEdit.setCarModelId(carRequestDTO.getCarModelId());
+        foundCarToEdit.setCarModel(carModel);
         foundCarToEdit.setColor(carRequestDTO.getColor());
         foundCarToEdit.setManufacturingYear(carRequestDTO.getManufacturingYear());
         foundCarToEdit.setPrice(carRequestDTO.getPrice());
@@ -72,7 +72,7 @@ public class CarServiceImpl implements CarService {
         carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
     }
 
-    private void verifyCarModelExistsAndHasColorAndManufacturingYear(CarRequestDTO carRequestDTO) {
+    private CarModel returnIfCarModelExistsAndHasColorAndManufacturingYear(CarRequestDTO carRequestDTO) {
         CarModel carModel = carModelService.getCarModelWithId(carRequestDTO.getCarModelId()).orElseThrow(() -> new ElementNotFoundException("Car Model", carRequestDTO.getCarModelId().toString()));
         if(carModel.getColors().stream().noneMatch(carModelColor -> carModelColor.equalsIgnoreCase(carRequestDTO.getColor()))){
             throw new InvalidCarSpecificationException("Color", carRequestDTO.getColor(), carModel.getId().toString());
@@ -81,5 +81,7 @@ public class CarServiceImpl implements CarService {
         if(carModel.getManufacturingYears().stream().noneMatch(carModelManufacturingYear -> carModelManufacturingYear.equals(carRequestDTO.getManufacturingYear()))){
             throw new InvalidCarSpecificationException("Manufacturing Year", carRequestDTO.getManufacturingYear().toString(), carModel.getId().toString());
         }
+
+        return carModel;
     }
 }
