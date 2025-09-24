@@ -31,14 +31,14 @@ public class CarController {
         this.carService = carService;
     }
 
-    /*@GetMapping("/{carId}")
+    @GetMapping("/{carId}")
     public ResponseEntity<CarResponseDTO> getCarById(@PathVariable Integer dealershipId, @PathVariable Integer carId) {
         Optional<Car> foundCar = carService.getCarWithId(dealershipId, carId);
 
         return foundCar.map(car ->
                 ResponseEntity.ok(carMapper.mapFromModelToResponseDto(car))
         ).orElseGet(() -> ResponseEntity.notFound().build());
-    }*/
+    }
 
     @PostMapping()
     public ResponseEntity<CarResponseDTO> createCar(@PathVariable Integer dealershipId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
@@ -46,7 +46,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(carMapper.mapFromModelToResponseDto(createdCar));
     }
 
-    /*@PutMapping("/{carId}")
+    @PutMapping("/{carId}")
     public ResponseEntity<CarResponseDTO> updateCar(@PathVariable Integer dealershipId, @PathVariable Integer carId, @RequestBody @Valid CarRequestDTO carRequestDTO) {
         Car updatedCar = carService.updateCar(dealershipId, carId, carRequestDTO);
         return ResponseEntity.ok(carMapper.mapFromModelToResponseDto(updatedCar));
@@ -56,5 +56,5 @@ public class CarController {
     public ResponseEntity<Void> deleteCar(@PathVariable Integer dealershipId, @PathVariable Integer carId) {
         carService.deleteCar(dealershipId, carId);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }

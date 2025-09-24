@@ -12,6 +12,8 @@ import ar.edu.unq.compra_tu_auto.service.CarModelService;
 import ar.edu.unq.compra_tu_auto.service.CarService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -30,7 +32,6 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car createCar(Integer dealershipId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
-
         verifyCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
 
         Car car = carMapper.mapFromRequestDtoToModel(carRequestDTO);
@@ -39,18 +40,16 @@ public class CarServiceImpl implements CarService {
         return carRepository.saveCar(car);
     }
 
-    /*@Override
+    @Override
     public Car updateCar(Integer dealershipId, Integer carId, CarRequestDTO carRequestDTO) {
         verifyCarDealershipExists(dealershipId);
+        verifyCarModelExistsAndHasColorAndManufacturingYear(carRequestDTO);
 
         Car foundCarToEdit = carRepository.getCarByIdAndDealershipId(carId, dealershipId).orElseThrow(() -> new ElementNotFoundException("Car", carId.toString()));
-        foundCarToEdit.setBrand(carRequestDTO.getBrand());
-        foundCarToEdit.setModel(carRequestDTO.getModel());
+        foundCarToEdit.setCarModelId(carRequestDTO.getCarModelId());
         foundCarToEdit.setColor(carRequestDTO.getColor());
-        foundCarToEdit.setManufactureYear(carRequestDTO.getManufactureYear());
-        foundCarToEdit.setStock(carRequestDTO.getStock());
+        foundCarToEdit.setManufacturingYear(carRequestDTO.getManufacturingYear());
         foundCarToEdit.setPrice(carRequestDTO.getPrice());
-        foundCarToEdit.setDescription(carRequestDTO.getDescription());
 
         return carRepository.saveCar(foundCarToEdit);
     }
@@ -67,7 +66,7 @@ public class CarServiceImpl implements CarService {
         verifyCarDealershipExists(dealershipId);
 
         carRepository.deleteCar(carId, dealershipId);
-    }*/
+    }
 
     private void verifyCarDealershipExists(Integer dealershipId) {
         carDealershipService.getCarDealershipWithId(dealershipId).orElseThrow(() -> new ElementNotFoundException("Car Dealership", dealershipId.toString()));
